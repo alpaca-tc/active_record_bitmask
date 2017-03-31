@@ -20,24 +20,27 @@ module ActiveRecordBitmaskAttributes
       attributes_to_bitmask(value)
     end
 
-    def bitmask_combination(value)
+    def bitmask_combination(bitmask)
+      return [] if bitmask.to_i.zero?
+
       max_value = mappings.values.max
       combination_pattern_size = (max_value << 1) - 1
-      0.upto(combination_pattern_size).select  { |i| i & value == value }
+      0.upto(combination_pattern_size).select  { |i| i & bitmask == bitmask }
     end
 
-    def bitmask_to_attributes(value)
-      return [] if value.blank?
+    def bitmask_to_attributes(bitmask)
+      return [] if bitmask.to_i.zero?
 
-      mappings.each_with_object([]) do |(key, bitmask), values|
-        values << key.to_sym unless (value & bitmask).zero?
+      mappings.each_with_object([]) do |(key, value), values|
+        values << key.to_sym if (value & bitmask).nonzero?
       end
     end
 
     def attributes_to_bitmask(attributes)
-      return if attributes.blank?
+      attributes = [attributes].compact unless attributes.is_a?(Array)
+      return if attributes.empty?
 
-      Array.wrap(attributes).inject(0) do |bitmask, key|
+      attributes.inject(0) do |bitmask, key|
         bit = mappings.fetch(key) { raise(ArgumentError, ":#{key} is not a valid #{attribute}") }
         bitmask | bit
       end

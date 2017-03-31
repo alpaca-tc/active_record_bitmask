@@ -1,4 +1,5 @@
 require 'active_record_bitmask_attributes/version'
+require 'active_support/concern'
 
 module ActiveRecordBitmaskAttributes
   autoload :AttributeMethods, 'active_record_bitmask_attributes/attribute_methods'
