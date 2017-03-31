@@ -52,6 +52,11 @@ RSpec.describe ActiveRecordBitmaskAttributes::Definition do
           instance.bitmask = bitmask
         end
 
+        context 'bitmask is nil' do
+          let(:bitmask) { nil }
+          it { is_expected.to eq([]) }
+        end
+
         context 'bitmask is 1' do
           let(:bitmask) { 1 }
           it { is_expected.to eq([:a]) }
