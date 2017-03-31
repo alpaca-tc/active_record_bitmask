@@ -1,8 +1,6 @@
 # ActiveRecordBitmaskAttributes
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/active_record_bitmask_attributes`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Transparent manipulation of bitmask attributes for ActiveRecord
 
 ## Installation
 
@@ -22,15 +20,70 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Simply declare an existing integer column as a bitmask.
+
+```
+class ApplicationRecord < ActiveRecord::Base
+  include ActiveRecordBitmaskAttributes::BitmaskAccessor
+end
+
+class Post < ApplicationRecord
+  bitmask :roles, as: [:administrator, :provider, :guest]
+end
+```
+
+You can then modify the column using the declared values.
+
+```
+post = Post.create(roles: [:provider, :guest])
+post.roles # => [:provider, :guest]
+post.roles += [:administrator]
+post.roles # => [:administrator, :provider, :guest]
+```
+
+### What the difference between `active_record_bitmask_attributes` and [bitmask_attributes](https://github.com/joelmoss/bitmask_attributes)?
+
+#### 1. `bitmask_attributes` is no longer supported.
+
+`active_record_bitmask_attributes` is supported latest Rails.
+
+#### 2. `bitmask_attributes` executes slow query
+
+```
+# bitmask_attributes executes slow query
+Post.with_roles(:provider).to_sql
+#=> SELECT `variations`.* FROM `variations` WHERE (variations.permitted & 2 > 0)
+
+# active_record_bitmask_attributes executes fast query
+Post.with_roles(:provider).to_sql
+#=> SELECT "posts".* FROM "posts" WHERE "posts"."bitmask" IN (2, 3, 6, 7)
+```
+
+#### 3. `bitmask_attributes` is complex
+
+`active_record_bitmask_attributes` is supported only minimum interfaces.
+Also, you need to include `ActiveRecordBitmaskAttributes::BitmaskAccessor` manually.
+
+### Scopes
+
+#### `with_#{attribute_name}` Filter by bitmask attributes
+
+```
+# The following scope matches [:administrator], [:administrator, :provider], [:administrator, :guest] or [:administrator, :provider, :guest]
+Post.with_roles(:administrator).to_sql
+#=> SELECT "posts".* FROM "posts" WHERE "posts"."bitmask" IN (1, 3, 5, 7)
+
+# The following scope matches [:administrator, :provider] or [:administrator, :provider, :guest]
+Post.with_roles(:administrator, :provider).to_sql
+#=> SELECT "posts".* FROM "posts" WHERE "posts"."bitmask" IN (3, 7)
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bundle install` to install dependencies. Then, run `bundle exec rake` to run the tests. 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/active_record_bitmask_attributes.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/alpaca-tc/active_record_bitmask_attributes.
