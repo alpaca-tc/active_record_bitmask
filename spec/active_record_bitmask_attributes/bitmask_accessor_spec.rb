@@ -37,5 +37,15 @@ RSpec.describe ActiveRecordBitmaskAttributes::BitmaskAccessor do
 
       it { is_expected.to be_a(ActiveRecordBitmaskAttributes::Mappings) }
     end
+
+    describe '.bitmask_keys_for' do
+      subject { Variation.bitmask_keys_for(:bitmask) }
+
+      around do |example|
+        with_bitmask(Variation, :bitmask, as: [:a]) { example.run }
+      end
+
+      it { is_expected.to eq([:a]) }
+    end
   end
 end

@@ -14,6 +14,10 @@ module ActiveRecordBitmaskAttributes
         _bitmask_mappings[attribute]
       end
 
+      def bitmask_keys_for(attribute)
+        _bitmask_mappings[attribute].mappings.keys
+      end
+
       protected
 
       def _bitmask_mappings
