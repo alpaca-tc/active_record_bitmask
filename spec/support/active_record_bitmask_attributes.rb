@@ -3,7 +3,7 @@ Module.new do
     klass.bitmask(*args)
     yield
   ensure
-    klass._bitmask_mappings.clear
+    klass.__send__(:_bitmask_mappings).clear
   end
 
   RSpec.configure do |config|

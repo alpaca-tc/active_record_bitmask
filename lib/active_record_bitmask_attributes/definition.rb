@@ -4,7 +4,7 @@ module ActiveRecordBitmaskAttributes
       klass.include(AttributeMethods) unless klass < AttributeMethods
 
       build_bitmask = ->(value) {
-        mappings = klass._bitmask_mappings[attribute]
+        mappings = klass.bitmask_for(attribute)
         ActiveRecordBitmaskAttributes::Bitmask.new(value, mappings).freeze
       }
 
@@ -15,7 +15,7 @@ module ActiveRecordBitmaskAttributes
         converter: build_bitmask
 
       klass.scope :"with_#{attribute}", ->(*values) {
-        mappings = klass._bitmask_mappings[attribute]
+        mappings = klass.bitmask_for(attribute)
         bitmask = ActiveRecordBitmaskAttributes::Bitmask.new(values, mappings)
         combination = mappings.bitmask_combination(bitmask.bitmask)
 

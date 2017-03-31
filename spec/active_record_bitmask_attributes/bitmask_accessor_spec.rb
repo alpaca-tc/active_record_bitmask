@@ -8,10 +8,10 @@ RSpec.describe ActiveRecordBitmaskAttributes::BitmaskAccessor do
 
       context 'with :as option' do
         it 'builds mappings' do
-          expect(Variation._bitmask_mappings).to_not be_key(:bitmask)
+          expect(Variation.bitmask_for(:bitmask)).to be_nil
 
           with_bitmask(Variation, :bitmask, as: [:a]) do
-            expect(Variation._bitmask_mappings).to be_key(:bitmask)
+            expect(Variation.bitmask_for(:bitmask)).to_not be_nil
           end
         end
 
@@ -26,6 +26,16 @@ RSpec.describe ActiveRecordBitmaskAttributes::BitmaskAccessor do
       end
 
       skip 'defines methods with ActiveRecordBitmaskAttributes::Definition'
+    end
+
+    describe '.bitmask_for' do
+      subject { Variation.bitmask_for(:bitmask) }
+
+      around do |example|
+        with_bitmask(Variation, :bitmask, as: [:a]) { example.run }
+      end
+
+      it { is_expected.to be_a(ActiveRecordBitmaskAttributes::Mappings) }
     end
   end
 end
