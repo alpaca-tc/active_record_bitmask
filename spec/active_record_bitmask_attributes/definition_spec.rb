@@ -21,6 +21,29 @@ RSpec.describe ActiveRecordBitmaskAttributes::Definition do
         end
       end
 
+      describe '#bitmask@<<' do
+        subject { instance.bitmask }
+        let(:instance) { Post.new }
+        it { expect { instance.bitmask << :a }.to raise_error(RuntimeError) }
+      end
+
+      describe '#bitmask@+=' do
+        subject { instance.bitmask }
+        let(:instance) { Post.new }
+
+        before do
+          instance.bitmask += [bitmask]
+        end
+
+        context 'bitmask is :a' do
+          let(:bitmask) { :a }
+
+          it 'adds bitmask value' do
+            is_expected.to eq([:a])
+          end
+        end
+      end
+
       describe '#bitmask=' do
         subject { instance.bitmask }
         let(:instance) { Post.new }

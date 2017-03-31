@@ -5,7 +5,7 @@ module ActiveRecordBitmaskAttributes
 
       build_bitmask = ->(value) {
         mappings = klass._bitmask_mappings[attribute]
-        ActiveRecordBitmaskAttributes::Bitmask.new(value, mappings)
+        ActiveRecordBitmaskAttributes::Bitmask.new(value, mappings).freeze
       }
 
       klass.composed_of attribute,
