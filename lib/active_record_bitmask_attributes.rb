@@ -4,7 +4,7 @@ require 'active_support/concern'
 module ActiveRecordBitmaskAttributes
   autoload :AttributeMethods, 'active_record_bitmask_attributes/attribute_methods'
   autoload :Bitmask, 'active_record_bitmask_attributes/bitmask'
-  autoload :BitmaskAccessor, 'active_record_bitmask_attributes/bitmask_accessor'
   autoload :Definition, 'active_record_bitmask_attributes/definition'
   autoload :Mappings, 'active_record_bitmask_attributes/mappings'
+  autoload :Model, 'active_record_bitmask_attributes/model'
 end

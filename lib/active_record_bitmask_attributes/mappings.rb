@@ -8,11 +8,7 @@ module ActiveRecordBitmaskAttributes
       end
 
       @attribute = attribute
-
-      as = options[:as]
-      @mappings = as.each_with_index.each_with_object({}) { |(value, index), hash|
-        hash[value.to_sym] = 0b1 << index
-      }.freeze
+      @mappings = attributes_to_mappings(options[:as]).freeze
     end
 
     def bitmask_or_attributes_to_bitmask(value)
@@ -42,9 +38,17 @@ module ActiveRecordBitmaskAttributes
 
       attributes.inject(0) do |bitmask, key|
         key = key.to_sym if key.respond_to?(:to_sym)
-        bit = mappings.fetch(key) { raise(ArgumentError, ":#{key} is not a valid #{attribute}") }
+        bit = mappings.fetch(key) { raise(ArgumentError, "#{key.inspect} is not a valid #{attribute}") }
         bitmask | bit
       end
+    end
+
+    private
+
+    def attributes_to_mappings(attributes)
+      attributes.each_with_index.each_with_object({}) { |(value, index), hash|
+        hash[value.to_sym] = 0b1 << index
+      }
     end
   end
 end

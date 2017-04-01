@@ -1,4 +1,4 @@
-RSpec.describe ActiveRecordBitmaskAttributes::BitmaskAccessor do
+RSpec.describe ActiveRecordBitmaskAttributes::Model do
   describe 'ClassMethods' do
     describe '.bitmask' do
       context 'without :as option' do

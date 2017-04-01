@@ -1,5 +1,5 @@
 module ActiveRecordBitmaskAttributes
-  module BitmaskAccessor
+  module Model
     extend ActiveSupport::Concern
 
     class_methods do

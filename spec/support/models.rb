@@ -10,7 +10,7 @@ ActiveRecord::Schema.define do
 end
 
 class ApplicationRecord < ActiveRecord::Base
-  include ActiveRecordBitmaskAttributes::BitmaskAccessor
+  include ActiveRecordBitmaskAttributes::Model
 
   self.abstract_class = true
 end
