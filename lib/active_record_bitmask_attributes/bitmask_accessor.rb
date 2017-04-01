@@ -10,12 +10,17 @@ module ActiveRecordBitmaskAttributes
         ActiveRecordBitmaskAttributes::Definition.define_methods(self, attribute)
       end
 
+      def bitmasks
+        _bitmask_mappings
+      end
+
       def bitmask_for(attribute)
-        _bitmask_mappings[attribute]
+        attribute = attribute.to_sym
+        bitmask_mappings.fetch(attribute) { raise(KeyError, "#{attribute.inspect} is not bitmask") }
       end
 
       def bitmask_keys_for(attribute)
-        _bitmask_mappings[attribute].mappings.keys
+        bitmask_for(attribute).mappings.keys
       end
 
       protected
