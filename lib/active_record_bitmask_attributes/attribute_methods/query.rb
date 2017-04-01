@@ -13,9 +13,8 @@ module ActiveRecordBitmaskAttributes
           mappings = self.class.bitmask_for(attribute_name.to_sym)
           mappings.attributes_to_bitmask(values)
 
-          values.all? do |value|
-            (__send__(attribute_name) || []).include?(value)
-          end
+          current_value = __send__(attribute_name)
+          values.all? { |value| current_value.include?(value) }
         else
           super
         end

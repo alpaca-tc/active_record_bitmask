@@ -17,7 +17,7 @@ RSpec.describe ActiveRecordBitmaskAttributes::Model do
           it 'does not overwrite bitmask' do
             with_bitmask(Variation, :bitmask, as: [:a]) do
               expect { with_bitmask(SubVariation, :bitmask, as: [:b]) {} }.to raise_error(ArgumentError)
-              expect { with_bitmask(SubVariation, :id, as: [:b]) {} }.to_not raise_error(ArgumentError)
+              expect { with_bitmask(SubVariation, :id, as: [:b]) {} }.to_not raise_error
             end
           end
         end

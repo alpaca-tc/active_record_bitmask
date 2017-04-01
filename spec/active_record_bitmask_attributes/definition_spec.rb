@@ -10,21 +10,13 @@ RSpec.describe ActiveRecordBitmaskAttributes::Definition do
 
         context 'bitmask is [:a]' do
           let(:instance) { Post.create!(bitmask: [:a]) }
-          it { is_expected.to be_a(ActiveRecordBitmaskAttributes::Bitmask) }
           it { is_expected.to eq([:a]) }
         end
 
         context 'bitmask is 1' do
           let(:instance) { Post.create!(bitmask: 1) }
-          it { is_expected.to be_a(ActiveRecordBitmaskAttributes::Bitmask) }
           it { is_expected.to eq([:a]) }
         end
-      end
-
-      describe '#bitmask@<<' do
-        subject { instance.bitmask }
-        let(:instance) { Post.new }
-        it { expect { instance.bitmask << :a }.to raise_error(RuntimeError) }
       end
 
       describe '#bitmask@+=' do
