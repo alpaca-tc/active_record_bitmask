@@ -25,7 +25,7 @@ module ActiveRecordBitmaskAttributes
     end
 
     def self.define_methods(klass, attribute)
-      klass.include(AttributeMethods) unless klass < AttributeMethods
+      klass.include(AttributeMethods::Query) unless klass < AttributeMethods::Query
 
       build_bitmask = ->(value) {
         mappings = klass.bitmask_for(attribute)

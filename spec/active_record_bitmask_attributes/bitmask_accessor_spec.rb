@@ -8,8 +8,6 @@ RSpec.describe ActiveRecordBitmaskAttributes::BitmaskAccessor do
 
       context 'with :as option' do
         it 'builds mappings' do
-          expect(Variation.bitmask_for(:bitmask)).to be_nil
-
           with_bitmask(Variation, :bitmask, as: [:a]) do
             expect(Variation.bitmask_for(:bitmask)).to_not be_nil
           end

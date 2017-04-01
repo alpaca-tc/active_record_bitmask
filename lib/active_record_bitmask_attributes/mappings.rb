@@ -41,7 +41,7 @@ module ActiveRecordBitmaskAttributes
       return if attributes.empty?
 
       attributes.inject(0) do |bitmask, key|
-        key = key.to_sym
+        key = key.to_sym if key.respond_to?(:to_sym)
         bit = mappings.fetch(key) { raise(ArgumentError, ":#{key} is not a valid #{attribute}") }
         bitmask | bit
       end

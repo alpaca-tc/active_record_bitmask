@@ -5,7 +5,7 @@ module ActiveRecordBitmaskAttributes
     class_methods do
       def bitmask(attribute, **options)
         attribute = attribute.to_sym
-        raise ArgumentError, "#{attribute} is already defined" if bitmask_for(attribute).present?
+        raise ArgumentError, "#{attribute} is already defined" if bitmasks.key?(attribute)
         _bitmask_mappings[attribute] = ActiveRecordBitmaskAttributes::Mappings.new(attribute, **options)
         ActiveRecordBitmaskAttributes::Definition.define_methods(self, attribute)
       end
@@ -16,7 +16,7 @@ module ActiveRecordBitmaskAttributes
 
       def bitmask_for(attribute)
         attribute = attribute.to_sym
-        bitmask_mappings.fetch(attribute) { raise(KeyError, "#{attribute.inspect} is not bitmask") }
+        bitmasks[attribute]
       end
 
       def bitmask_keys_for(attribute)
