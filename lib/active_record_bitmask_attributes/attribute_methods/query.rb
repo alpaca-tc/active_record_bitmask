@@ -1,12 +1,6 @@
 module ActiveRecordBitmaskAttributes
   module AttributeMethods
     module Query
-      extend ActiveSupport::Concern
-
-      included do
-        attribute_method_suffix('?')
-      end
-
       private
 
       def bitmask_attribute?(attribute_name)
