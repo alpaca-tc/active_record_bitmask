@@ -10,9 +10,9 @@ module ActiveRecordBitmaskAttributes
       @attribute = attribute
 
       as = options[:as]
-      @mappings = as.each_with_index.each_with_object({}) do |(value, index), hash|
+      @mappings = as.each_with_index.each_with_object({}) { |(value, index), hash|
         hash[value.to_sym] = 0b1 << index
-      end
+      }.freeze
     end
 
     def bitmask_or_attributes_to_bitmask(value)
@@ -25,7 +25,7 @@ module ActiveRecordBitmaskAttributes
 
       max_value = mappings.values.max
       combination_pattern_size = (max_value << 1) - 1
-      0.upto(combination_pattern_size).select  { |i| i & bitmask == bitmask }
+      0.upto(combination_pattern_size).select { |i| i & bitmask == bitmask }
     end
 
     def bitmask_to_attributes(bitmask)
