@@ -33,7 +33,7 @@ module ActiveRecordBitmaskAttributes
     end
 
     def attributes_to_bitmask(attributes)
-      attributes = [attributes].compact unless attributes.is_a?(Array)
+      attributes = [attributes].compact unless attributes.respond_to?(:inject)
       return if attributes.empty?
 
       attributes.inject(0) do |bitmask, key|

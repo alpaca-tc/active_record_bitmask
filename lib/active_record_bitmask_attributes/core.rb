@@ -26,7 +26,7 @@ module ActiveRecordBitmaskAttributes
 
       private
 
-      def generated_bitmask_methods #:nodoc:
+      def generated_bitmask_methods
         @generated_bitmask_methods ||= Module.new {
           extend Mutex_m
         }.tap { |mod| include mod }
@@ -37,7 +37,8 @@ module ActiveRecordBitmaskAttributes
           def #{attribute}
             mappings = self.class.bitmask_for(:#{attribute})
             bitmask = mappings.bitmask_or_attributes_to_bitmask(super)
-            mappings.bitmask_to_attributes(bitmask)
+            attributes = mappings.bitmask_to_attributes(bitmask)
+            ActiveRecordBitmaskAttributes::Bitmask.new(self, :#{attribute}, attributes)
           end
 
           def #{attribute}=(value)

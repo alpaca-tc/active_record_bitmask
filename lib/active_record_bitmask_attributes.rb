@@ -3,6 +3,7 @@ require 'active_support/concern'
 
 module ActiveRecordBitmaskAttributes
   autoload :AttributeMethods, 'active_record_bitmask_attributes/attribute_methods'
+  autoload :Bitmask, 'active_record_bitmask_attributes/bitmask'
   autoload :Core, 'active_record_bitmask_attributes/core'
   autoload :Definition, 'active_record_bitmask_attributes/definition'
   autoload :Mappings, 'active_record_bitmask_attributes/mappings'
