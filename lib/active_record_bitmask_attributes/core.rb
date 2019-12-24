@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveRecordBitmaskAttributes
   module Core
     extend ActiveSupport::Concern
@@ -14,7 +16,7 @@ module ActiveRecordBitmaskAttributes
         generated_bitmask_methods.synchronize do
           return false if @bitmask_methods_generated
 
-          self.bitmasks.keys.each do |key|
+          bitmasks.keys.each do |key|
             define_bitmask_reader_and_writer(key)
           end
 

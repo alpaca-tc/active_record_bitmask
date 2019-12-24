@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveRecordBitmaskAttributes
   class Bitmask < DelegateClass(Array)
     def self.define_destructive_method(method_name)
@@ -9,10 +11,10 @@ module ActiveRecordBitmaskAttributes
       METHOD
     end
 
-    [
-      :<<, :select!, :keep_if, :delete_if, :reject!, :uniq!,
-      :clear, :replace, :concat, :delete, :slice!, :push,
-      :pop, :shift, :unshift
+    %i[
+      << select! keep_if delete_if reject! uniq!
+      clear replace concat delete slice! push
+      pop shift unshift
     ].each do |method_name|
       define_destructive_method(method_name)
     end

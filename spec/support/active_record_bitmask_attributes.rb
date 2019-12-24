@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Module.new do
   def with_bitmask(klass, *args)
     klass.bitmask(*args)

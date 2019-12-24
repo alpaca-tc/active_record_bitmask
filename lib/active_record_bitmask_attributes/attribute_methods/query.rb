@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveRecordBitmaskAttributes
   module AttributeMethods
     module Query

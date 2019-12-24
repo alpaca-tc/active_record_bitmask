@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 RSpec.describe ActiveRecordBitmaskAttributes::Mappings do
   describe 'InstanceMethods' do
     let(:instance) { described_class.new(attribute, options) }
     let(:attribute) { :attribute }
     let(:options) do
       {
-        as: [:a, :b, :c, :d, :e, :f, :g]
+        as: %i[a b c d e f g]
       }
     end
 
@@ -33,7 +35,7 @@ RSpec.describe ActiveRecordBitmaskAttributes::Mappings do
 
       context 'with 3' do
         let(:value) { 3 }
-        it { is_expected.to eq([:a, :b]) }
+        it { is_expected.to eq(%i[a b]) }
       end
 
       context 'with 127' do
@@ -71,7 +73,7 @@ RSpec.describe ActiveRecordBitmaskAttributes::Mappings do
       end
 
       context 'given [:a, :b]' do
-        let(:value) { [:a, :b] }
+        let(:value) { %i[a b] }
         it { is_expected.to eq(3) }
       end
 
@@ -99,13 +101,13 @@ RSpec.describe ActiveRecordBitmaskAttributes::Mappings do
 
         it do
           is_expected.to eq([
-            1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25,
-            27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49,
-            51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73,
-            75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97,
-            99, 101, 103, 105, 107, 109, 111, 113, 115, 117,
-            119, 121, 123, 125, 127
-          ])
+                              1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25,
+                              27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49,
+                              51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73,
+                              75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97,
+                              99, 101, 103, 105, 107, 109, 111, 113, 115, 117,
+                              119, 121, 123, 125, 127
+                            ])
         end
       end
 
@@ -171,7 +173,7 @@ RSpec.describe ActiveRecordBitmaskAttributes::Mappings do
       end
 
       context 'given [:a, :b]' do
-        let(:value) { [:a, :b] }
+        let(:value) { %i[a b] }
         it { is_expected.to eq(3) }
       end
 

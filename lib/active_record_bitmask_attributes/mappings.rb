@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module ActiveRecordBitmaskAttributes
   class Mappings
     attr_reader :attribute, :mappings
 
     def initialize(attribute, options = {})
-      unless options[:as].kind_of?(Array)
+      unless options[:as].is_a?(Array)
         raise ArgumentError, 'must provide an Array :as option'
       end
 

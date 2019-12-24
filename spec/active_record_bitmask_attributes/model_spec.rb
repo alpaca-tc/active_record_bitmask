@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe ActiveRecordBitmaskAttributes::Model do
   describe 'ClassMethods' do
     describe '.bitmask' do

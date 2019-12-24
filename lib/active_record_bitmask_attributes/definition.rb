@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveRecordBitmaskAttributes
   class Definition
     def self.define_methods(klass, attribute)

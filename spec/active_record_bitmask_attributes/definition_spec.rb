@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 RSpec.describe ActiveRecordBitmaskAttributes::Definition do
   describe '.define_methods' do
     around do |example|
-      with_bitmask(Post, :bitmask, as: [:a, :b, :c]) { example.run }
+      with_bitmask(Post, :bitmask, as: %i[a b c]) { example.run }
     end
 
     describe 'defined composed object' do
@@ -110,7 +112,7 @@ RSpec.describe ActiveRecordBitmaskAttributes::Definition do
 
         let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
         let!(:post_bitmask_2) { Post.create!(bitmask: [:b]) }
-        let!(:post_bitmask_3) { Post.create!(bitmask: [:a, :b]) }
+        let!(:post_bitmask_3) { Post.create!(bitmask: %i[a b]) }
 
         context 'with :a' do
           let(:bitmask_or_attributes) { [:a] }
