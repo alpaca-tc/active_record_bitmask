@@ -2,8 +2,7 @@
 
 RSpec.describe ActiveRecordBitmask::Mappings do
   describe 'InstanceMethods' do
-    let(:instance) { described_class.new(attribute, as: as) }
-    let(:attribute) { :attribute }
+    let(:instance) { described_class.new(as) }
 
     let(:as) do
       %i[a b c d e f g]

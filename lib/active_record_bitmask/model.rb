@@ -7,11 +7,16 @@ module ActiveRecordBitmask
     extend ActiveSupport::Concern
 
     class_methods do
-      def bitmask(attribute, **options)
+      # @param attribute [#to_sym]
+      # @param as [Array<#to_sym>]
+      #
+      # @return [void]
+      def bitmask(attribute, as: [])
         attribute = attribute.to_sym
         raise ArgumentError, "#{attribute} is already defined" if bitmasks.key?(attribute)
+        raise ArgumentError, 'must provide an Array :as option' if as.empty?
 
-        _bitmask_mappings[attribute] = ActiveRecordBitmask::Mappings.new(attribute, **options)
+        _bitmask_mappings[attribute] = ActiveRecordBitmask::Mappings.new(as)
         ActiveRecordBitmask::Definition.define_methods(self, attribute)
       end
 

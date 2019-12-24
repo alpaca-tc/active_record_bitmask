@@ -2,15 +2,11 @@
 
 module ActiveRecordBitmask
   class Mappings
-    attr_reader :attribute, :mappings
+    attr_reader :mappings
 
-    # @param attribute [Symbol]
-    # @param as [Array<#to_sym>]
-    def initialize(attribute, as: [])
-      raise ArgumentError, 'must provide an Array :as option' if as.empty?
-
-      @attribute = attribute
-      @mappings = attributes_to_mappings(as).freeze
+    # @param keys [Array<#to_sym>]
+    def initialize(keys)
+      @mappings = attributes_to_mappings(keys).freeze
     end
 
     def bitmask_or_attributes_to_bitmask(value)
@@ -46,7 +42,7 @@ module ActiveRecordBitmask
 
       attributes.inject(0) do |bitmask, key|
         key = key.to_sym if key.respond_to?(:to_sym)
-        bit = mappings.fetch(key) { raise(ArgumentError, "#{key.inspect} is not a valid #{attribute}") }
+        bit = mappings.fetch(key) { raise(ArgumentError, "#{key.inspect} is not a valid value") }
         bitmask | bit
       end
     end
