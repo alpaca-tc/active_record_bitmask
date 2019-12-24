@@ -23,10 +23,6 @@ Or install it yourself as:
 Simply declare an existing integer column as a bitmask.
 
 ```
-class ApplicationRecord < ActiveRecord::Base
-  include ActiveRecordBitmask::BitmaskAccessor
-end
-
 class Post < ApplicationRecord
   bitmask :roles, as: [:administrator, :provider, :guest]
 end
@@ -40,29 +36,6 @@ post.roles # => [:provider, :guest]
 post.roles += [:administrator]
 post.roles # => [:administrator, :provider, :guest]
 ```
-
-### What the difference between `active_record_bitmask` and [bitmask](https://github.com/joelmoss/bitmask)?
-
-#### 1. `bitmask` is no longer supported.
-
-`active_record_bitmask` is supported latest Rails.
-
-#### 2. `bitmask` executes slow query
-
-```
-# bitmask executes slow query
-Post.with_roles(:provider).to_sql
-#=> SELECT `variations`.* FROM `variations` WHERE (variations.permitted & 2 > 0)
-
-# active_record_bitmask executes fast query
-Post.with_roles(:provider).to_sql
-#=> SELECT "posts".* FROM "posts" WHERE "posts"."bitmask" IN (2, 3, 6, 7)
-```
-
-#### 3. `bitmask` is complex
-
-`active_record_bitmask` is supported only minimum interfaces.
-Also, you need to include `ActiveRecordBitmask::BitmaskAccessor` manually.
 
 ### Scopes
 

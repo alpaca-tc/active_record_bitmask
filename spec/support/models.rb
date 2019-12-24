@@ -12,8 +12,6 @@ ActiveRecord::Schema.define do
 end
 
 class ApplicationRecord < ActiveRecord::Base
-  include ActiveRecordBitmask::Model
-
   self.abstract_class = true
 end
 
