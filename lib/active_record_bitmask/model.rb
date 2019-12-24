@@ -16,7 +16,15 @@ module ActiveRecordBitmask
       # @return [void]
       def bitmask(definitions)
         definitions.each do |attribute, values|
-          define_bitmask(attribute, values)
+          raise ArgumentError, "#{attribute} is already defined" if bitmasks.key?(attribute)
+          raise ArgumentError, 'must provide an Array option' if values.empty?
+
+          attribute = attribute.to_sym
+
+          map = ActiveRecordBitmask::Map.new(values)
+
+          define_bitmask(attribute, map)
+          define_bitmask_scopes(attribute, map)
         end
       end
 
@@ -45,19 +53,15 @@ module ActiveRecordBitmask
 
       private
 
-      def define_bitmask(attribute, values)
-        attribute = attribute.to_sym
-
-        raise ArgumentError, "#{attribute} is already defined" if bitmasks.key?(attribute)
-        raise ArgumentError, 'must provide an Array option' if values.empty?
-
-        map = ActiveRecordBitmask::Map.new(values)
+      def define_bitmask(attribute, map)
         _bitmask_maps[attribute] = map
 
         decorate_attribute_type(attribute, :bitmask) do |subtype|
           ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
         end
+      end
 
+      def define_bitmask_scopes(attribute, map)
         scope :"with_#{attribute}", ->(*values) {
           bitmask = map.bitmask_or_attributes_to_bitmask(values)
           combination = map.bitmask_combination(bitmask)
