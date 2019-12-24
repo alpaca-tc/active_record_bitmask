@@ -4,13 +4,11 @@ module ActiveRecordBitmask
   class Mappings
     attr_reader :attribute, :mappings
 
-    def initialize(attribute, options = {})
-      unless options[:as].is_a?(Array)
-        raise ArgumentError, 'must provide an Array :as option'
-      end
-
+    # @param attribute [Symbol]
+    # @param as [Array<#to_sym>]
+    def initialize(attribute, as: [])
       @attribute = attribute
-      @mappings = attributes_to_mappings(options[:as]).freeze
+      @mappings = attributes_to_mappings(as).freeze
     end
 
     def bitmask_or_attributes_to_bitmask(value)
@@ -47,10 +45,10 @@ module ActiveRecordBitmask
 
     private
 
-    def attributes_to_mappings(attributes)
-      attributes.each_with_index.each_with_object({}) { |(value, index), hash|
+    def attributes_to_mappings(keys)
+      keys.each_with_index.each_with_object({}) do |(value, index), hash|
         hash[value.to_sym] = 0b1 << index
-      }
+      end
     end
   end
 end

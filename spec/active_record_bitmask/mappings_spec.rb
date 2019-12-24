@@ -2,12 +2,11 @@
 
 RSpec.describe ActiveRecordBitmask::Mappings do
   describe 'InstanceMethods' do
-    let(:instance) { described_class.new(attribute, options) }
+    let(:instance) { described_class.new(attribute, as: as) }
     let(:attribute) { :attribute }
-    let(:options) do
-      {
-        as: %i[a b c d e f g]
-      }
+
+    let(:as) do
+      %i[a b c d e f g]
     end
 
     describe '#bitmask_to_attributes' do
@@ -40,7 +39,7 @@ RSpec.describe ActiveRecordBitmask::Mappings do
 
       context 'with 127' do
         let(:value) { 127 }
-        it { is_expected.to eq(options[:as]) }
+        it { is_expected.to eq(as) }
       end
     end
 
@@ -78,7 +77,7 @@ RSpec.describe ActiveRecordBitmask::Mappings do
       end
 
       context 'given [:a, :b, :c, :d, :e, :f, :g]' do
-        let(:value) { options[:as] }
+        let(:value) { as }
         it { is_expected.to eq(127) }
       end
     end
@@ -178,7 +177,7 @@ RSpec.describe ActiveRecordBitmask::Mappings do
       end
 
       context 'given [:a, :b, :c, :d, :e, :f, :g]' do
-        let(:value) { options[:as] }
+        let(:value) { as }
         it { is_expected.to eq(127) }
       end
 
