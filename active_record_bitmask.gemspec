@@ -2,16 +2,16 @@
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'active_record_bitmask_attributes/version'
+require 'active_record_bitmask/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'active_record_bitmask_attributes'
+  spec.name          = 'active_record_bitmask'
   spec.version       = ActiveRecordBitmask::VERSION
   spec.authors       = ['alpaca-tc']
   spec.email         = ['alpaca-tc@alpaca.tc']
 
   spec.summary       = 'Simple bitmask attribute support for ActiveRecord'
-  spec.homepage      = 'https://github.com/pixiv/active_record_bitmask_attributes'
+  spec.homepage      = 'https://github.com/pixiv/active_record_bitmask'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})

@@ -2,7 +2,7 @@
 
 $LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
 
-require 'active_record_bitmask_attributes'
+require 'active_record_bitmask'
 require 'active_record'
 
 RSpec.configure do |config|
