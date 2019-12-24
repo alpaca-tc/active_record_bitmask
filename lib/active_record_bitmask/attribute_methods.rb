@@ -2,6 +2,6 @@
 
 module ActiveRecordBitmask
   module AttributeMethods
-    autoload :Query, 'active_record_bitmask/attribute_methods/query'
+    require 'active_record_bitmask/attribute_methods/query'
   end
 end
