@@ -6,6 +6,7 @@ module ActiveRecordBitmask
   require 'active_record_bitmask/bitmask'
   require 'active_record_bitmask/core'
   require 'active_record_bitmask/definition'
+  require 'active_record_bitmask/bitmask_type'
   require 'active_record_bitmask/map'
   require 'active_record_bitmask/model'
 end
