@@ -16,6 +16,12 @@ RSpec.describe ActiveRecordBitmask::Model do
         end
 
         context 'sub class' do
+          it 'inherits mappings' do
+            with_bitmask(Variation, :bitmask, as: [:a]) do
+              expect(SubVariation.bitmask_for(:bitmask)).to be_present
+            end
+          end
+
           it 'does not overwrite bitmask' do
             with_bitmask(Variation, :bitmask, as: [:a]) do
               expect { with_bitmask(SubVariation, :bitmask, as: [:b]) {} }.to raise_error(ArgumentError)
@@ -36,16 +42,6 @@ RSpec.describe ActiveRecordBitmask::Model do
       end
 
       it { is_expected.to be_a(ActiveRecordBitmask::Mappings) }
-    end
-
-    describe '.bitmask_keys_for' do
-      subject { Variation.bitmask_keys_for(:bitmask) }
-
-      around do |example|
-        with_bitmask(Variation, :bitmask, as: [:a]) { example.run }
-      end
-
-      it { is_expected.to eq([:a]) }
     end
   end
 end

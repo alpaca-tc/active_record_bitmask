@@ -19,13 +19,13 @@ module ActiveRecordBitmask
         _bitmask_mappings
       end
 
+      # @param attribute [#to_s]
+      #
+      # @raise [KeyError]
+      #
+      # @return [ActiveRecordBitmask::Mappings]
       def bitmask_for(attribute)
-        attribute = attribute.to_sym
-        bitmasks[attribute]
-      end
-
-      def bitmask_keys_for(attribute)
-        bitmask_for(attribute).mappings.keys
+        bitmasks.fetch(attribute.to_sym)
       end
 
       protected
