@@ -8,14 +8,6 @@ RSpec.describe ActiveRecordBitmask::Map do
       %i[a b c d e f g]
     end
 
-    describe '#initialize' do
-      context 'given blank as' do
-        it 'raises ArgumentError' do
-          expect { described_class.new(:key, as: []) }.to raise_error(ArgumentError)
-        end
-      end
-    end
-
     describe '#keys' do
       subject { instance.keys }
       it { is_expected.to eq(as) }

@@ -2,7 +2,7 @@
 
 RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
   around do |example|
-    with_bitmask(Post, :bitmask, as: [:a]) do
+    with_bitmask(Post, bitmask: [:a]) do
       example.run
     end
   end

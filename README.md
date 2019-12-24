@@ -24,7 +24,7 @@ Simply declare an existing integer column as a bitmask.
 
 ```
 class Post < ApplicationRecord
-  bitmask :roles, as: [:administrator, :provider, :guest]
+  bitmask(roles: [:administrator, :provider, :guest])
 end
 ```
 

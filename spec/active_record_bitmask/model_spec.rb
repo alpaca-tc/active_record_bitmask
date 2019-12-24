@@ -4,28 +4,28 @@ RSpec.describe ActiveRecordBitmask::Model do
   describe 'ClassMethods' do
     describe '.bitmask' do
       context 'without :as option' do
-        subject { -> { with_bitmask(Variation, :bitmask) {} } }
+        subject { -> { with_bitmask(Variation, bitmask: []) {} } }
         it { is_expected.to raise_error(ArgumentError) }
       end
 
       context 'with :as option' do
         it 'builds mappings' do
-          with_bitmask(Variation, :bitmask, as: [:a]) do
+          with_bitmask(Variation, bitmask: [:a]) do
             expect(Variation.bitmask_for(:bitmask)).to_not be_nil
           end
         end
 
         context 'sub class' do
           it 'inherits mappings' do
-            with_bitmask(Variation, :bitmask, as: [:a]) do
+            with_bitmask(Variation, bitmask: [:a]) do
               expect(SubVariation.bitmask_for(:bitmask)).to be_present
             end
           end
 
           it 'does not overwrite bitmask' do
-            with_bitmask(Variation, :bitmask, as: [:a]) do
-              expect { with_bitmask(SubVariation, :bitmask, as: [:b]) {} }.to raise_error(ArgumentError)
-              expect { with_bitmask(SubVariation, :id, as: [:b]) {} }.to_not raise_error
+            with_bitmask(Variation, bitmask: [:a]) do
+              expect { with_bitmask(SubVariation, bitmask: [:b]) {} }.to raise_error(ArgumentError)
+              expect { with_bitmask(SubVariation, id: [:b]) {} }.to_not raise_error
             end
           end
         end
@@ -33,7 +33,7 @@ RSpec.describe ActiveRecordBitmask::Model do
 
       describe 'Accessors' do
         around do |example|
-          with_bitmask(Post, :bitmask, as: %i[a b c]) { example.run }
+          with_bitmask(Post, bitmask: %i[a b c]) { example.run }
         end
 
         describe 'defined composed object' do
@@ -142,7 +142,7 @@ RSpec.describe ActiveRecordBitmask::Model do
           subject { Post.with_bitmask(*bitmask_or_attributes) }
 
           around do |example|
-            with_bitmask(Post, :bitmask, as: %i[a b c]) { example.run }
+            with_bitmask(Post, bitmask: %i[a b c]) { example.run }
           end
 
           let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
@@ -176,7 +176,7 @@ RSpec.describe ActiveRecordBitmask::Model do
       subject { Variation.bitmask_for(:bitmask) }
 
       around do |example|
-        with_bitmask(Variation, :bitmask, as: [:a]) { example.run }
+        with_bitmask(Variation, bitmask: [:a]) { example.run }
       end
 
       it { is_expected.to be_a(ActiveRecordBitmask::Map) }
