@@ -7,6 +7,8 @@ module ActiveRecordBitmask
     # @param attribute [Symbol]
     # @param as [Array<#to_sym>]
     def initialize(attribute, as: [])
+      raise ArgumentError, 'must provide an Array :as option' if as.empty?
+
       @attribute = attribute
       @mappings = attributes_to_mappings(as).freeze
     end
