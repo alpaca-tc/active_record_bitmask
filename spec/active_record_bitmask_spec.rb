@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+RSpec.describe ActiveRecordBitmask do
+  it 'has a version number' do
+    expect(ActiveRecordBitmask::VERSION).not_to be nil
+  end
+end

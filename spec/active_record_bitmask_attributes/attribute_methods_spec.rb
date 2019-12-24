@@ -1,2 +1,0 @@
-RSpec.describe ActiveRecordBitmaskAttributes::AttributeMethods do
-end

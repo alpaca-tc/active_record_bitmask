@@ -1,4 +1,6 @@
-RSpec.describe ActiveRecordBitmaskAttributes::AttributeMethods::Query do
+# frozen_string_literal: true
+
+RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
   around do |example|
     with_bitmask(Post, :bitmask, as: [:a]) do
       example.run
