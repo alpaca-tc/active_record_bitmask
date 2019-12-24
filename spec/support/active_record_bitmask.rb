@@ -5,7 +5,7 @@ Module.new do
     klass.bitmask(*args)
     yield
   ensure
-    klass.__send__(:_bitmask_mappings).clear
+    klass.__send__(:_bitmask_maps).clear
   end
 
   RSpec.configure do |config|

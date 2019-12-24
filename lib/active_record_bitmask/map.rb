@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module ActiveRecordBitmask
-  class Mappings
-    attr_reader :mappings
+  class Map
+    attr_reader :mapping
 
     # @param keys [Array<#to_sym>]
     def initialize(keys)
-      @mappings = attributes_to_mappings(keys).freeze
+      @mapping = attributes_to_mapping(keys).freeze
     end
 
     def bitmask_or_attributes_to_bitmask(value)
@@ -20,7 +20,7 @@ module ActiveRecordBitmask
     def bitmask_combination(bitmask)
       return [] if bitmask.to_i.zero?
 
-      max_value = mappings.values.max
+      max_value = mapping.values.max
       combination_pattern_size = (max_value << 1) - 1
       0.upto(combination_pattern_size).select { |i| i & bitmask == bitmask }
     end
@@ -31,7 +31,7 @@ module ActiveRecordBitmask
     def bitmask_to_attributes(bitmask)
       return [] if bitmask.to_i.zero?
 
-      mappings.each_with_object([]) do |(key, value), values|
+      mapping.each_with_object([]) do |(key, value), values|
         values << key.to_sym if (value & bitmask).nonzero?
       end
     end
@@ -42,19 +42,19 @@ module ActiveRecordBitmask
 
       attributes.inject(0) do |bitmask, key|
         key = key.to_sym if key.respond_to?(:to_sym)
-        bit = mappings.fetch(key) { raise(ArgumentError, "#{key.inspect} is not a valid value") }
+        bit = mapping.fetch(key) { raise(ArgumentError, "#{key.inspect} is not a valid value") }
         bitmask | bit
       end
     end
 
     # @return [Array<Symbol>]
     def keys
-      mappings.keys
+      mapping.keys
     end
 
     private
 
-    def attributes_to_mappings(keys)
+    def attributes_to_mapping(keys)
       keys.each_with_index.each_with_object({}) do |(value, index), hash|
         hash[value.to_sym] = 0b1 << index
       end

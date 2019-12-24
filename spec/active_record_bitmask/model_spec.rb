@@ -41,7 +41,7 @@ RSpec.describe ActiveRecordBitmask::Model do
         with_bitmask(Variation, :bitmask, as: [:a]) { example.run }
       end
 
-      it { is_expected.to be_a(ActiveRecordBitmask::Mappings) }
+      it { is_expected.to be_a(ActiveRecordBitmask::Map) }
     end
   end
 end

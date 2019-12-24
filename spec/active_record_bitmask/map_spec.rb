@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ActiveRecordBitmask::Mappings do
+RSpec.describe ActiveRecordBitmask::Map do
   describe 'InstanceMethods' do
     let(:instance) { described_class.new(as) }
 
