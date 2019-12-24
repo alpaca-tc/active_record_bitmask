@@ -48,6 +48,11 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
         it { is_expected.to eq([:a]) }
       end
 
+      context 'given :a' do
+        let(:value) { :a }
+        it { is_expected.to eq([:a]) }
+      end
+
       context 'given [:a, :b]' do
         let(:value) { [:a, :b] }
         it { is_expected.to eq([:a, :b]) }
@@ -56,6 +61,11 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
       context 'given [:b, :a]' do
         let(:value) { [:b, :a] }
         it { is_expected.to eq([:a, :b]) }
+      end
+
+      context 'given :invalid' do
+        let(:value) { :invalid }
+        it { expect { subject }.to raise_error(ArgumentError) }
       end
     end
 
