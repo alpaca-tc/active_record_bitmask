@@ -16,6 +16,9 @@ module ActiveRecordBitmask
       attributes_to_bitmask(value)
     end
 
+    # @param bitmask [Integer]
+    #
+    # @return [Array<Integer>]
     def bitmask_combination(bitmask)
       return [] if bitmask.to_i.zero?
 
@@ -24,6 +27,9 @@ module ActiveRecordBitmask
       0.upto(combination_pattern_size).select { |i| i & bitmask == bitmask }
     end
 
+    # @param bitmask [Integer]
+    #
+    # @return [Array<Symbol>]
     def bitmask_to_attributes(bitmask)
       return [] if bitmask.to_i.zero?
 
@@ -41,6 +47,11 @@ module ActiveRecordBitmask
         bit = mappings.fetch(key) { raise(ArgumentError, "#{key.inspect} is not a valid #{attribute}") }
         bitmask | bit
       end
+    end
+
+    # @return [Array<Symbol>]
+    def keys
+      mappings.keys
     end
 
     private
