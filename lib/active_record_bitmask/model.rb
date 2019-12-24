@@ -23,11 +23,16 @@ module ActiveRecordBitmask
         map = ActiveRecordBitmask::Map.new(as)
         _bitmask_maps[attribute] = map
 
-        ActiveRecordBitmask::Definition.define_methods(self, attribute)
-
         decorate_attribute_type(attribute, :bitmask) do |subtype|
           ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
         end
+
+        scope :"with_#{attribute}", ->(*values) {
+          bitmask = map.bitmask_or_attributes_to_bitmask(values)
+          combination = map.bitmask_combination(bitmask)
+
+          where(attribute => combination)
+        }
       end
 
       def bitmasks
