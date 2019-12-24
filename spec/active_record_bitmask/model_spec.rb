@@ -169,6 +169,43 @@ RSpec.describe ActiveRecordBitmask::Model do
             it { expect { subject }.to raise_error(ArgumentError) }
           end
         end
+
+        describe '.with_any_bitmask' do
+          subject { Post.with_any_bitmask(*bitmask_or_attributes) }
+
+          around do |example|
+            with_bitmask(Post, bitmask: %i[a b c]) { example.run }
+          end
+
+          let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
+          let!(:post_bitmask_2) { Post.create!(bitmask: [:b]) }
+          let!(:post_bitmask_3) { Post.create!(bitmask: %i[a b]) }
+
+          context 'with :a' do
+            let(:bitmask_or_attributes) { [:a] }
+            it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_3) }
+          end
+
+          context 'with :b' do
+            let(:bitmask_or_attributes) { [:a, :b] }
+            it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_2, post_bitmask_3) }
+          end
+
+          context 'with 1' do
+            let(:bitmask_or_attributes) { [1] }
+            it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_3) }
+          end
+
+          context 'with nil' do
+            let(:bitmask_or_attributes) { [] }
+            it { is_expected.to be_empty }
+          end
+
+          context 'with :unknown' do
+            let(:bitmask_or_attributes) { [:unknown] }
+            it { expect { subject }.to raise_error(ArgumentError) }
+          end
+        end
       end
     end
 

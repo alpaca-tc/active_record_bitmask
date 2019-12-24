@@ -68,6 +68,13 @@ module ActiveRecordBitmask
 
           where(attribute => combination)
         }
+
+        scope :"with_any_#{attribute}", ->(*values) {
+          bitmasks = values.map { |value| map.bitmask_or_attributes_to_bitmask(value) }
+          combination = bitmasks.flat_map { |bitmask| map.bitmask_combination(bitmask) }
+
+          where(attribute => combination)
+        }
       end
     end
   end
