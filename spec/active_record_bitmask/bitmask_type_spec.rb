@@ -141,5 +141,33 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
         it { is_expected.to eq([]) }
       end
     end
+
+    describe '#changed_in_place?' do
+      let(:instance) do
+        described_class.new(name, map, sub_type)
+      end
+
+      let(:name) { :name }
+      let(:map) { ActiveRecordBitmask::Map.new([:a, :b]) }
+      let(:sub_type) { ActiveModel::Type.lookup(:integer) }
+
+      subject do
+        instance.changed_in_place?(a, b)
+      end
+
+      context 'given [], 0' do
+        let(:a) { [] }
+        let(:b) { 0 }
+
+        it { is_expected.to be(false) }
+      end
+
+      context 'given [], 1' do
+        let(:a) { [] }
+        let(:b) { 1 }
+
+        it { is_expected.to be(true) }
+      end
+    end
   end
 end

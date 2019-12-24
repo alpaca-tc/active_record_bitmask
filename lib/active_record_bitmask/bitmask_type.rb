@@ -39,5 +39,13 @@ module ActiveRecordBitmask
 
       @map.bitmask_to_attributes(value)
     end
+
+    # @param raw_old_value [Integer]
+    # @param new_value [Array<Symbol>]
+    #
+    # @return [boolean]
+    def changed_in_place?(raw_old_value, new_value)
+      cast(raw_old_value) != cast(new_value)
+    end
   end
 end
