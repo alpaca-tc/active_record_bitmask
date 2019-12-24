@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ActiveRecordBitmaskAttributes
+module ActiveRecordBitmask
   module Core
     extend ActiveSupport::Concern
 
@@ -40,7 +40,7 @@ module ActiveRecordBitmaskAttributes
             mappings = self.class.bitmask_for(:#{attribute})
             bitmask = mappings.bitmask_or_attributes_to_bitmask(super)
             attributes = mappings.bitmask_to_attributes(bitmask)
-            ActiveRecordBitmaskAttributes::Bitmask.new(self, :#{attribute}, attributes)
+            ActiveRecordBitmask::Bitmask.new(self, :#{attribute}, attributes)
           end
 
           def #{attribute}=(value)

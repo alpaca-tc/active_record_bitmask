@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-RSpec.describe ActiveRecordBitmaskAttributes do
+RSpec.describe ActiveRecordBitmask do
   it 'has a version number' do
-    expect(ActiveRecordBitmaskAttributes::VERSION).not_to be nil
+    expect(ActiveRecordBitmask::VERSION).not_to be nil
   end
 end

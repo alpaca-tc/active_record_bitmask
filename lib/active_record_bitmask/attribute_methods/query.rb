@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ActiveRecordBitmaskAttributes
+module ActiveRecordBitmask
   module AttributeMethods
     module Query
       private

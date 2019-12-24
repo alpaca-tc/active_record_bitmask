@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ActiveRecordBitmaskAttributes::Definition do
+RSpec.describe ActiveRecordBitmask::Definition do
   describe '.define_methods' do
     around do |example|
       with_bitmask(Post, :bitmask, as: %i[a b c]) { example.run }

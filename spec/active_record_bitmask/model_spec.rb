@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ActiveRecordBitmaskAttributes::Model do
+RSpec.describe ActiveRecordBitmask::Model do
   describe 'ClassMethods' do
     describe '.bitmask' do
       context 'without :as option' do
@@ -25,7 +25,7 @@ RSpec.describe ActiveRecordBitmaskAttributes::Model do
         end
       end
 
-      skip 'defines methods with ActiveRecordBitmaskAttributes::Definition'
+      skip 'defines methods with ActiveRecordBitmask::Definition'
     end
 
     describe '.bitmask_for' do
@@ -35,7 +35,7 @@ RSpec.describe ActiveRecordBitmaskAttributes::Model do
         with_bitmask(Variation, :bitmask, as: [:a]) { example.run }
       end
 
-      it { is_expected.to be_a(ActiveRecordBitmaskAttributes::Mappings) }
+      it { is_expected.to be_a(ActiveRecordBitmask::Mappings) }
     end
 
     describe '.bitmask_keys_for' do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ActiveRecordBitmaskAttributes
+module ActiveRecordBitmask
   class Mappings
     attr_reader :attribute, :mappings
 

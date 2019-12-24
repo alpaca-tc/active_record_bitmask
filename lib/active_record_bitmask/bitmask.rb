@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ActiveRecordBitmaskAttributes
+module ActiveRecordBitmask
   class Bitmask < DelegateClass(Array)
     def self.define_destructive_method(method_name)
       class_eval(<<-METHOD, __FILE__, __LINE__ + 1)

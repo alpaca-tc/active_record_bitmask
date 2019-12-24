@@ -6,7 +6,7 @@ require 'active_record_bitmask_attributes/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'active_record_bitmask_attributes'
-  spec.version       = ActiveRecordBitmaskAttributes::VERSION
+  spec.version       = ActiveRecordBitmask::VERSION
   spec.authors       = ['alpaca-tc']
   spec.email         = ['alpaca-tc@alpaca.tc']
 

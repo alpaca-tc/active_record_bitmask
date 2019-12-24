@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ActiveRecordBitmaskAttributes
+module ActiveRecordBitmask
   module Model
     extend ActiveSupport::Concern
 
@@ -9,8 +9,8 @@ module ActiveRecordBitmaskAttributes
         attribute = attribute.to_sym
         raise ArgumentError, "#{attribute} is already defined" if bitmasks.key?(attribute)
 
-        _bitmask_mappings[attribute] = ActiveRecordBitmaskAttributes::Mappings.new(attribute, **options)
-        ActiveRecordBitmaskAttributes::Definition.define_methods(self, attribute)
+        _bitmask_mappings[attribute] = ActiveRecordBitmask::Mappings.new(attribute, **options)
+        ActiveRecordBitmask::Definition.define_methods(self, attribute)
       end
 
       def bitmasks

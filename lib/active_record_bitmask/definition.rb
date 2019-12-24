@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module ActiveRecordBitmaskAttributes
+module ActiveRecordBitmask
   class Definition
     def self.define_methods(klass, attribute)
-      klass.include(ActiveRecordBitmaskAttributes::Core) unless klass < ActiveRecordBitmaskAttributes::Core
+      klass.include(ActiveRecordBitmask::Core) unless klass < ActiveRecordBitmask::Core
 
       unless klass.respond_to?(:"with_#{attribute}")
         klass.scope :"with_#{attribute}", ->(*values) {

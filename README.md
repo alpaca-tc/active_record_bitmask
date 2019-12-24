@@ -1,4 +1,4 @@
-# ActiveRecordBitmaskAttributes
+# ActiveRecordBitmask
 
 Transparent manipulation of bitmask attributes for ActiveRecord
 
@@ -24,7 +24,7 @@ Simply declare an existing integer column as a bitmask.
 
 ```
 class ApplicationRecord < ActiveRecord::Base
-  include ActiveRecordBitmaskAttributes::BitmaskAccessor
+  include ActiveRecordBitmask::BitmaskAccessor
 end
 
 class Post < ApplicationRecord
@@ -62,7 +62,7 @@ Post.with_roles(:provider).to_sql
 #### 3. `bitmask_attributes` is complex
 
 `active_record_bitmask_attributes` is supported only minimum interfaces.
-Also, you need to include `ActiveRecordBitmaskAttributes::BitmaskAccessor` manually.
+Also, you need to include `ActiveRecordBitmask::BitmaskAccessor` manually.
 
 ### Scopes
 
