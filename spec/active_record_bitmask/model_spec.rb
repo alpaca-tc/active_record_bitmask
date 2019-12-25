@@ -206,6 +206,20 @@ RSpec.describe ActiveRecordBitmask::Model do
             it { expect { subject }.to raise_error(ArgumentError) }
           end
         end
+
+        describe '.no_bitmask' do
+          subject { Post.no_bitmask }
+
+          around do |example|
+            with_bitmask(Post, bitmask: %i[a b c]) { example.run }
+          end
+
+          let!(:post_bitmask_0) { Post.create!(bitmask: []) }
+          let!(:post_bitmask_null) { Post.create!(bitmask: nil) }
+          let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
+
+          it { is_expected.to contain_exactly(post_bitmask_0, post_bitmask_null) }
+        end
       end
     end
 

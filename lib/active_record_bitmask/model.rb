@@ -75,6 +75,10 @@ module ActiveRecordBitmask
 
           where(attribute => combination)
         }
+
+        scope :"no_#{attribute}", -> {
+          where(attribute => [0, nil])
+        }
       end
     end
   end
