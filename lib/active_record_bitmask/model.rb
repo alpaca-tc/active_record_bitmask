@@ -29,7 +29,7 @@ module ActiveRecordBitmask
       end
 
       def bitmasks
-        _bitmask_maps
+        base_class._base_bitmask_maps
       end
 
       # @param attribute [#to_s]
@@ -43,10 +43,6 @@ module ActiveRecordBitmask
 
       protected
 
-      def _bitmask_maps
-        base_class._base_bitmask_maps
-      end
-
       def _base_bitmask_maps
         @_base_bitmask_maps ||= {}
       end
@@ -54,7 +50,7 @@ module ActiveRecordBitmask
       private
 
       def define_bitmask(attribute, map)
-        _bitmask_maps[attribute] = map
+        bitmasks[attribute] = map
 
         decorate_attribute_type(attribute, :bitmask) do |subtype|
           ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
