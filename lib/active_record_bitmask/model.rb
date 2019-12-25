@@ -32,7 +32,7 @@ module ActiveRecordBitmask
           bitmasks[attribute] = map
 
           define_bitmask_attribute(attribute, map)
-          define_bitmask_scopes(attribute, map)
+          define_bitmask_scopes(attribute)
         end
       end
 
@@ -53,45 +53,48 @@ module ActiveRecordBitmask
         end
       end
 
-      def define_bitmask_scopes(attribute, map)
+      def define_bitmask_scopes(attribute)
         blank = [0, nil].freeze
-        all_combination = map.values.flat_map { |bitmask| map.bitmask_combination(bitmask) }
 
         scope :"with_#{attribute}", ->(*values) {
+          map = bitmask_for(attribute)
           bitmask = map.bitmask_or_attributes_to_bitmask(values)
           combination = map.bitmask_combination(bitmask)
 
           if combination.empty?
-            where(attribute => all_combination)
+            where(attribute => map.all_combination)
           else
             where(attribute => combination)
           end
         }
 
         scope :"with_any_#{attribute}", ->(*values) {
+          map = bitmask_for(attribute)
           bitmasks = values.map { |value| map.bitmask_or_attributes_to_bitmask(value) }
           combination = bitmasks.flat_map { |bitmask| map.bitmask_combination(bitmask) }
 
           if combination.empty?
-            where(attribute => all_combination)
+            where(attribute => map.all_combination)
           else
             where(attribute => combination)
           end
         }
 
         scope :"without_#{attribute}", ->(*values) {
+          map = bitmask_for(attribute)
           bitmasks = values.map { |value| map.bitmask_or_attributes_to_bitmask(value) }
           combination = bitmasks.flat_map { |bitmask| map.bitmask_combination(bitmask) }
 
           if combination.empty?
-            where(attribute => all_combination)
+            where(attribute => map.all_combination)
           else
-            excepted = (all_combination + blank) - combination
+            excepted = (map.all_combination.to_a + blank) - combination
             where(attribute => excepted)
           end
         }
 
         scope :"with_exact_#{attribute}", ->(*values) {
+          map = bitmask_for(attribute)
           bitmasks = values.map { |value| map.bitmask_or_attributes_to_bitmask(value) }
           bitmask = bitmasks.inject(0, &:|)
 

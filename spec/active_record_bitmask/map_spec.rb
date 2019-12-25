@@ -144,6 +144,11 @@ RSpec.describe ActiveRecordBitmask::Map do
       end
     end
 
+    describe '#all_combination' do
+      subject { instance.all_combination }
+      it { is_expected.to eq((1..127)) }
+    end
+
     describe '#bitmask_or_attributes_to_bitmask' do
       subject { instance.bitmask_or_attributes_to_bitmask(value) }
 

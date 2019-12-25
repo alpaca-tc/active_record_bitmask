@@ -23,9 +23,17 @@ module ActiveRecordBitmask
     def bitmask_combination(bitmask)
       return [] if bitmask.to_i.zero?
 
-      max_value = mapping.values.max
+      max_value = values.max
       combination_pattern_size = (max_value << 1) - 1
       0.upto(combination_pattern_size).select { |i| i & bitmask == bitmask }
+    end
+
+    # @return [Range<Integer>]
+    def all_combination
+      max_bit = values.size
+      max_value = (2 << (max_bit - 1)) - 1
+
+      1..max_value
     end
 
     # @param bitmask [Integer]
