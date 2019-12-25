@@ -75,9 +75,7 @@ Lint/DisjunctiveAssignmentInConstructor:
   Enabled: false
 
 Metrics/AbcSize:
-  Exclude:
-    - 'spec/**/*'
-  Max: 20
+  Enabled: false
 
 Metrics/CyclomaticComplexity:
   Max: 10

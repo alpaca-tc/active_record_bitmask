@@ -23,11 +23,14 @@ module ActiveRecordBitmask
 
           map = ActiveRecordBitmask::Map.new(values)
 
+          bitmasks[attribute] = map
+
           define_bitmask(attribute, map)
           define_bitmask_scopes(attribute, map)
         end
       end
 
+      # @return [Hash<Symbol, ActiveRecordBitmask::Map>]
       def bitmasks
         base_class._base_bitmask_maps
       end
@@ -50,8 +53,6 @@ module ActiveRecordBitmask
       private
 
       def define_bitmask(attribute, map)
-        bitmasks[attribute] = map
-
         decorate_attribute_type(attribute, :bitmask) do |subtype|
           ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
         end

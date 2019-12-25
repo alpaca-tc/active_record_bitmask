@@ -9,6 +9,9 @@ module ActiveRecordBitmask
       @mapping = attributes_to_mapping(keys).freeze
     end
 
+    # @param value [Integer, Symbol, Array<#to_sym>]
+    #
+    # @return [Integer]
     def bitmask_or_attributes_to_bitmask(value)
       value = bitmask_to_attributes(value) if value.is_a?(Integer)
       attributes_to_bitmask(value)
@@ -36,6 +39,9 @@ module ActiveRecordBitmask
       end
     end
 
+    # @param attributes [Array<#to_sym>]
+    #
+    # @return [Integer]
     def attributes_to_bitmask(attributes)
       attributes = [attributes].compact unless attributes.respond_to?(:inject)
       return if attributes.empty?
