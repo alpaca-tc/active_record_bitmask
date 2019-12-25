@@ -44,6 +44,21 @@ RSpec.describe ActiveRecordBitmask::Model do
           describe '#bitmask' do
             subject { instance.bitmask }
 
+            context 'initial' do
+              let(:instance) { Post.create! }
+
+              it 'saves as 0' do
+                result = Post.connection.exec_query("SELECT bitmask, bitmask_zero FROM #{Post.table_name} WHERE id = #{instance.id}")
+                row = result[0]
+
+                database_value = row['bitmask']
+                expect(database_value).to be_nil
+
+                database_value = row['bitmask_zero']
+                expect(database_value).to eq(0)
+              end
+            end
+
             context 'bitmask is [:a]' do
               let(:instance) { Post.create!(bitmask: [:a]) }
               it { is_expected.to eq([:a]) }
