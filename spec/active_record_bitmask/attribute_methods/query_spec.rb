@@ -41,6 +41,11 @@ RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
 
         it { is_expected.to be true }
 
+        context 'without argument' do
+          subject { instance.bitmask? }
+          it { is_expected.to be true }
+        end
+
         context 'with :a' do
           subject { instance.bitmask?(:a) }
           it { is_expected.to be true }
