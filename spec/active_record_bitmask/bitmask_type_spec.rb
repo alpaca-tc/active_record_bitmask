@@ -30,7 +30,7 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
       end
 
       let(:name) { :name }
-      let(:map) { ActiveRecordBitmask::Map.new([:a, :b]) }
+      let(:map) { ActiveRecordBitmask::Map.new(%i[a b]) }
       let(:sub_type) { ActiveModel::Type.lookup(:integer) }
 
       context 'given nil' do
@@ -54,13 +54,13 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
       end
 
       context 'given [:a, :b]' do
-        let(:value) { [:a, :b] }
-        it { is_expected.to eq([:a, :b]) }
+        let(:value) { %i[a b] }
+        it { is_expected.to eq(%i[a b]) }
       end
 
       context 'given [:b, :a]' do
-        let(:value) { [:b, :a] }
-        it { is_expected.to eq([:a, :b]) }
+        let(:value) { %i[b a] }
+        it { is_expected.to eq(%i[a b]) }
       end
 
       context 'given :invalid' do
@@ -79,7 +79,7 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
       end
 
       let(:name) { :name }
-      let(:map) { ActiveRecordBitmask::Map.new([:a, :b]) }
+      let(:map) { ActiveRecordBitmask::Map.new(%i[a b]) }
       let(:sub_type) { ActiveModel::Type.lookup(:integer) }
 
       context 'given nil' do
@@ -98,12 +98,12 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
       end
 
       context 'given [:a, :b]' do
-        let(:value) { [:a, :b] }
+        let(:value) { %i[a b] }
         it { is_expected.to eq(3) }
       end
 
       context 'given [:b, :a]' do
-        let(:value) { [:b, :a] }
+        let(:value) { %i[b a] }
         it { is_expected.to eq(3) }
       end
     end
@@ -118,7 +118,7 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
       end
 
       let(:name) { :name }
-      let(:map) { ActiveRecordBitmask::Map.new([:a, :b]) }
+      let(:map) { ActiveRecordBitmask::Map.new(%i[a b]) }
       let(:sub_type) { ActiveModel::Type.lookup(:integer) }
 
       context 'given nil' do
@@ -143,7 +143,7 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
 
       context 'given 3' do
         let(:value) { 3 }
-        it { is_expected.to eq([:a, :b]) }
+        it { is_expected.to eq(%i[a b]) }
       end
 
       context 'given 4' do
@@ -158,7 +158,7 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
       end
 
       let(:name) { :name }
-      let(:map) { ActiveRecordBitmask::Map.new([:a, :b]) }
+      let(:map) { ActiveRecordBitmask::Map.new(%i[a b]) }
       let(:sub_type) { ActiveModel::Type.lookup(:integer) }
 
       subject do

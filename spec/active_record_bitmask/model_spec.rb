@@ -187,7 +187,7 @@ RSpec.describe ActiveRecordBitmask::Model do
           end
 
           context 'with :b' do
-            let(:bitmask_or_attributes) { [:a, :b] }
+            let(:bitmask_or_attributes) { %i[a b] }
             it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_2, post_bitmask_3) }
           end
 
@@ -225,7 +225,7 @@ RSpec.describe ActiveRecordBitmask::Model do
           end
 
           context 'with [:a, :b]' do
-            let(:bitmask_or_attributes) { [:a, :b] }
+            let(:bitmask_or_attributes) { %i[a b] }
             it { is_expected.to contain_exactly(post_bitmask_3) }
           end
 
@@ -268,7 +268,7 @@ RSpec.describe ActiveRecordBitmask::Model do
           end
 
           context 'with [:a, :b]' do
-            let(:bitmask_or_attributes) { [:a, :b] }
+            let(:bitmask_or_attributes) { %i[a b] }
             it { is_expected.to contain_exactly(post_bitmask_blank) }
           end
 
