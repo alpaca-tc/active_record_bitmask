@@ -3,6 +3,7 @@
 ActiveRecord::Schema.define do
   create_table :posts, force: true do |t|
     t.integer :bitmask
+    t.integer :column
   end
 
   create_table :variations, force: true do |t|

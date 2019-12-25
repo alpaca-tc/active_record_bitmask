@@ -6,7 +6,7 @@ module ActiveRecordBitmask
       private
 
       def bitmask_attribute?(attribute_name)
-        self.class.bitmask_for(attribute_name.to_sym).present?
+        self.class.bitmasks.key?(attribute_name.to_sym)
       end
 
       def attribute?(attribute_name, *values)

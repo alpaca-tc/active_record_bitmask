@@ -12,7 +12,7 @@ RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
     let(:instance) { Post.new }
 
     context 'with attribute' do
-      let(:attribute) { 'id' }
+      let(:attribute) { 'column' }
 
       context 'if value is not present' do
         it { is_expected.to be false }
@@ -20,7 +20,7 @@ RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
 
       context 'if value is present' do
         before do
-          instance.id = 1
+          instance.column = 1
         end
 
         it { is_expected.to be true }
