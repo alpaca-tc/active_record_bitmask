@@ -22,7 +22,7 @@ Or install it yourself as:
 
 Simply declare an existing integer column as a bitmask.
 
-```
+```ruby
 class Post < ApplicationRecord
   bitmask(roles: [:administrator, :provider, :guest])
 end
@@ -30,26 +30,40 @@ end
 
 You can then modify the column using the declared values.
 
-```
+```ruby
 post = Post.create(roles: [:provider, :guest])
-post.roles # => [:provider, :guest]
+post.roles #=> [:provider, :guest]
 post.roles += [:administrator]
-post.roles # => [:administrator, :provider, :guest]
+post.roles #=> [:administrator, :provider, :guest]
+```
+
+You can check bitmask
+
+```ruby
+post = Post.create(roles: [:provider, :guest])
+post.roles?(:provider) #=> false
+post.roles?(:guest, :provider) #=> true
+```
+
+You can get the definition of bitmask
+
+```ruby
+map = Post.bitmask_for(:rules)
+map.keys   #=> [:administrator, :provider, :guest]
+map.values #=> [1, 2, 4]
 ```
 
 ### Scopes
 
-#### `with_#{attribute_name}` Filter by bitmask attributes
+#### `with_rules`
 
-```
-# The following scope matches [:administrator], [:administrator, :provider], [:administrator, :guest] or [:administrator, :provider, :guest]
-Post.with_roles(:administrator).to_sql
-#=> SELECT "posts".* FROM "posts" WHERE "posts"."bitmask" IN (1, 3, 5, 7)
+#### `with_any_rules`
 
-# The following scope matches [:administrator, :provider] or [:administrator, :provider, :guest]
-Post.with_roles(:administrator, :provider).to_sql
-#=> SELECT "posts".* FROM "posts" WHERE "posts"."bitmask" IN (3, 7)
-```
+#### `without_rules`
+
+#### `with_exact_rules`
+
+#### `no_rules`
 
 ## Development
 
