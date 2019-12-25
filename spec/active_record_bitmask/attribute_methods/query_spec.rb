@@ -31,7 +31,33 @@ RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
       let(:attribute) { 'bitmask' }
 
       context 'if value is not present' do
-        it { is_expected.to be false }
+        before do
+          instance.bitmask = value
+        end
+
+        context '0' do
+          let(:value) do
+            0
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context '[]' do
+          let(:value) do
+            []
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context 'nil' do
+          let(:value) do
+            nil
+          end
+
+          it { is_expected.to be false }
+        end
       end
 
       context 'if value is present' do

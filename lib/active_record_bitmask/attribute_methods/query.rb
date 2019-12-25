@@ -12,10 +12,10 @@ module ActiveRecordBitmask
       def attribute?(attribute_name, *values)
         if bitmask_attribute?(attribute_name) && values.present?
           # assert bitmask values
-          mappings = self.class.bitmask_for(attribute_name.to_sym)
-          mappings.attributes_to_bitmask(values)
+          map = self.class.bitmask_for(attribute_name)
+          map.attributes_to_bitmask(values)
 
-          current_value = __send__(attribute_name)
+          current_value = attribute(attribute_name)
           values.all? { |value| current_value.include?(value) }
         else
           super
