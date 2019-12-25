@@ -76,6 +76,17 @@ module ActiveRecordBitmask
           where(attribute => combination)
         }
 
+        scope :"with_exact_#{attribute}", ->(*values) {
+          bitmasks = values.map { |value| map.bitmask_or_attributes_to_bitmask(value) }
+          bitmask = bitmasks.inject(0, &:|)
+
+          if bitmask.zero?
+            public_send(:"no_#{attribute}")
+          else
+            where(attribute => bitmask)
+          end
+        }
+
         scope :"no_#{attribute}", -> {
           where(attribute => [0, nil])
         }
