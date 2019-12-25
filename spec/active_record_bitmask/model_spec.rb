@@ -3,29 +3,33 @@
 RSpec.describe ActiveRecordBitmask::Model do
   describe 'ClassMethods' do
     describe '.bitmask' do
-      context 'without :as option' do
+      context 'without attributes' do
         subject { -> { with_bitmask(Variation, bitmask: []) {} } }
         it { is_expected.to raise_error(ArgumentError) }
       end
 
-      context 'with :as option' do
+      context 'with attributes' do
         it 'builds mappings' do
           with_bitmask(Variation, bitmask: [:a]) do
-            expect(Variation.bitmask_for(:bitmask)).to_not be_nil
+            expect(Variation.bitmask_for(:bitmask)).to be_a(ActiveRecordBitmask::Map)
           end
         end
 
         context 'sub class' do
           it 'inherits mappings' do
             with_bitmask(Variation, bitmask: [:a]) do
-              expect(SubVariation.bitmask_for(:bitmask)).to be_present
+              inherited = Class.new(Variation)
+              expect(inherited.bitmask_for(:bitmask).keys).to eq([:a])
             end
           end
 
-          it 'does not overwrite bitmask' do
+          it "can overwrite bitmask" do
             with_bitmask(Variation, bitmask: [:a]) do
-              expect { with_bitmask(SubVariation, bitmask: [:b]) {} }.to raise_error(ArgumentError)
-              expect { with_bitmask(SubVariation, id: [:b]) {} }.to_not raise_error
+              inherited = Class.new(Variation)
+              inherited.bitmask(bitmask: [:b])
+
+              expect(Variation.bitmask_for(:bitmask).keys).to eq([:a])
+              expect(inherited.bitmask_for(:bitmask).keys).to eq([:b])
             end
           end
         end

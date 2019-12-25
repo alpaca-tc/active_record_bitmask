@@ -19,5 +19,3 @@ end
 class Post < ApplicationRecord; end
 
 class Variation < ApplicationRecord; end
-
-class SubVariation < Variation; end

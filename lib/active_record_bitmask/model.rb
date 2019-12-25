@@ -9,16 +9,21 @@ module ActiveRecordBitmask
 
     included do
       include ActiveRecordBitmask::AttributeMethods::Query
-      class_attribute(:bitmasks, instance_writer: false, default: {})
+      class_attribute(:bitmasks, instance_accessor: false, default: {})
     end
 
     class_methods do
+      # @param base [ActiveRecord::Base]
+      def inherited(base)
+        base.bitmasks = bitmasks.deep_dup
+        super
+      end
+
       # @param definitions [Hash]
       #
       # @return [void]
       def bitmask(definitions)
         definitions.each do |attribute, values|
-          raise ArgumentError, "#{attribute} is already defined" if bitmasks.key?(attribute)
           raise ArgumentError, 'must provide an Array option' if values.empty?
 
           attribute = attribute.to_sym

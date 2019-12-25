@@ -4,6 +4,7 @@ $LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
 
 require 'active_record_bitmask'
 require 'active_record'
+require 'pry'
 
 RSpec.configure do |config|
   Kernel.srand(config.seed)
