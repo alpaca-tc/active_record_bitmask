@@ -45,7 +45,8 @@ module ActiveRecordBitmask
     #
     # @return [boolean]
     def changed_in_place?(raw_old_value, new_value)
-      cast(raw_old_value) != cast(new_value)
+      raw_old_value.nil? != new_value.nil? ||
+        cast(raw_old_value) != cast(new_value)
     end
   end
 end

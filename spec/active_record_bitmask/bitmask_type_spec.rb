@@ -165,6 +165,34 @@ RSpec.describe ActiveRecordBitmask::BitmaskType do
         instance.changed_in_place?(a, b)
       end
 
+      context 'given nil, nil' do
+        let(:a) { nil }
+        let(:b) { nil }
+
+        it { is_expected.to be(false) }
+      end
+
+      context 'given nil, []' do
+        let(:a) { nil }
+        let(:b) { [] }
+
+        it { is_expected.to be(true) }
+      end
+
+      context 'given 0, []' do
+        let(:a) { 0 }
+        let(:b) { [] }
+
+        it { is_expected.to be(false) }
+      end
+
+      context 'given [], []' do
+        let(:a) { [] }
+        let(:b) { [] }
+
+        it { is_expected.to be(false) }
+      end
+
       context 'given [], 0' do
         let(:a) { [] }
         let(:b) { 0 }
