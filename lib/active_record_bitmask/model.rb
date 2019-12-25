@@ -22,17 +22,16 @@ module ActiveRecordBitmask
           raise ArgumentError, 'must provide an Array option' if values.empty?
 
           attribute = attribute.to_sym
-
           map = ActiveRecordBitmask::Map.new(values)
 
           bitmasks[attribute] = map
 
-          define_bitmask(attribute, map)
+          define_bitmask_attribute(attribute, map)
           define_bitmask_scopes(attribute, map)
         end
       end
 
-      # @param attribute [#to_s]
+      # @param attribute [#to_sym]
       #
       # @raise [KeyError]
       #
@@ -43,7 +42,7 @@ module ActiveRecordBitmask
 
       private
 
-      def define_bitmask(attribute, map)
+      def define_bitmask_attribute(attribute, map)
         decorate_attribute_type(attribute, :bitmask) do |subtype|
           ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
         end
