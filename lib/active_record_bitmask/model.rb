@@ -61,7 +61,7 @@ module ActiveRecordBitmask
           bitmask = map.bitmask_or_attributes_to_bitmask(values)
           combination = map.bitmask_combination(bitmask)
 
-          if combination.empty?
+          if bitmask.zero?
             where(attribute => map.all_combination)
           else
             where(attribute => combination)
@@ -85,8 +85,8 @@ module ActiveRecordBitmask
           bitmasks = values.map { |value| map.bitmask_or_attributes_to_bitmask(value) }
           combination = bitmasks.flat_map { |bitmask| map.bitmask_combination(bitmask) }
 
-          if combination.empty?
-            where(attribute => map.all_combination)
+          if values.empty?
+            public_send(:"no_#{attribute}")
           else
             excepted = (map.all_combination.to_a + blank) - combination
             where(attribute => excepted)

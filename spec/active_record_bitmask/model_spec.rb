@@ -302,7 +302,7 @@ RSpec.describe ActiveRecordBitmask::Model do
 
           context 'with []' do
             let(:bitmask_or_attributes) { [] }
-            it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_2, post_bitmask_3) }
+            it { is_expected.to contain_exactly(post_bitmask_blank) }
           end
 
           context 'with 0' do
@@ -317,7 +317,7 @@ RSpec.describe ActiveRecordBitmask::Model do
 
           context 'without argument' do
             let(:bitmask_or_attributes) { [] }
-            it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_2, post_bitmask_3) }
+            it { is_expected.to contain_exactly(post_bitmask_blank) }
           end
 
           context 'with :unknown' do

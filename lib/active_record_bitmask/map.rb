@@ -21,7 +21,7 @@ module ActiveRecordBitmask
     #
     # @return [Array<Integer>]
     def bitmask_combination(bitmask)
-      return [] if bitmask.to_i.zero?
+      return [0] if bitmask.to_i.zero?
 
       max_value = values.max
       combination_pattern_size = (max_value << 1) - 1
@@ -52,7 +52,6 @@ module ActiveRecordBitmask
     # @return [Integer]
     def attributes_to_bitmask(attributes)
       attributes = [attributes].compact unless attributes.respond_to?(:inject)
-      return if attributes.empty?
 
       attributes.inject(0) do |bitmask, key|
         key = key.to_sym if key.respond_to?(:to_sym)

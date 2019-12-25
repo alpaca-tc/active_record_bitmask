@@ -57,12 +57,12 @@ RSpec.describe ActiveRecordBitmask::Map do
 
       context 'given []' do
         let(:value) { [] }
-        it { is_expected.to be_nil }
+        it { is_expected.to eq(0) }
       end
 
       context 'given nil' do
         let(:value) { nil }
-        it { is_expected.to be_nil }
+        it { is_expected.to eq(0) }
       end
 
       context 'given 0' do
@@ -96,12 +96,12 @@ RSpec.describe ActiveRecordBitmask::Map do
 
       context 'given 0' do
         let(:value) { 0 }
-        it { is_expected.to eq([]) }
+        it { is_expected.to eq([0]) }
       end
 
       context 'given nil' do
         let(:value) { nil }
-        it { is_expected.to eq([]) }
+        it { is_expected.to eq([0]) }
       end
 
       context 'given 1' do
@@ -154,7 +154,7 @@ RSpec.describe ActiveRecordBitmask::Map do
 
       context 'given 0' do
         let(:value) { 0 }
-        it { is_expected.to be_nil }
+        it { is_expected.to eq(0) }
       end
 
       context 'given 1' do
@@ -174,12 +174,12 @@ RSpec.describe ActiveRecordBitmask::Map do
 
       context 'given 128' do
         let(:value) { 128 }
-        it { is_expected.to be_nil }
+        it { is_expected.to eq(0) }
       end
 
       context 'given []' do
         let(:value) { [] }
-        it { is_expected.to be_nil }
+        it { is_expected.to eq(0) }
       end
 
       context 'given [:a]' do
