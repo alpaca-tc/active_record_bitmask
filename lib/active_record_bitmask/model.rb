@@ -62,6 +62,8 @@ module ActiveRecordBitmask
       end
 
       def define_bitmask_scopes(attribute, map)
+        blank = [0, nil].freeze
+
         scope :"with_#{attribute}", ->(*values) {
           bitmask = map.bitmask_or_attributes_to_bitmask(values)
           combination = map.bitmask_combination(bitmask)
@@ -76,6 +78,19 @@ module ActiveRecordBitmask
           where(attribute => combination)
         }
 
+        scope :"without_#{attribute}", ->(*values) {
+          bitmasks = values.map { |value| map.bitmask_or_attributes_to_bitmask(value) }
+          combination = bitmasks.flat_map { |bitmask| map.bitmask_combination(bitmask) }
+          all_combination = map.values.flat_map { |bitmask| map.bitmask_combination(bitmask) }
+
+          if combination.empty?
+            where(attribute => all_combination)
+          else
+            excepted = (all_combination + blank) - combination
+            where(attribute => excepted)
+          end
+        }
+
         scope :"with_exact_#{attribute}", ->(*values) {
           bitmasks = values.map { |value| map.bitmask_or_attributes_to_bitmask(value) }
           bitmask = bitmasks.inject(0, &:|)
@@ -88,7 +103,7 @@ module ActiveRecordBitmask
         }
 
         scope :"no_#{attribute}", -> {
-          where(attribute => [0, nil])
+          where(attribute => blank)
         }
       end
     end

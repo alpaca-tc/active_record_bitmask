@@ -224,7 +224,7 @@ RSpec.describe ActiveRecordBitmask::Model do
             it { is_expected.to contain_exactly(post_bitmask_1) }
           end
 
-          context 'with :b' do
+          context 'with [:a, :b]' do
             let(:bitmask_or_attributes) { [:a, :b] }
             it { is_expected.to contain_exactly(post_bitmask_3) }
           end
@@ -237,6 +237,64 @@ RSpec.describe ActiveRecordBitmask::Model do
           context 'with []' do
             let(:bitmask_or_attributes) { [] }
             it { is_expected.to contain_exactly(post_bitmask_blank) }
+          end
+
+          context 'with :unknown' do
+            let(:bitmask_or_attributes) { [:unknown] }
+            it { expect { subject }.to raise_error(ArgumentError) }
+          end
+        end
+
+        describe '.without_bitmask' do
+          subject { Post.without_bitmask(*bitmask_or_attributes) }
+
+          around do |example|
+            with_bitmask(Post, bitmask: %i[a b c]) { example.run }
+          end
+
+          let!(:post_bitmask_blank) { Post.create!(bitmask: []) }
+          let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
+          let!(:post_bitmask_2) { Post.create!(bitmask: [:b]) }
+          let!(:post_bitmask_3) { Post.create!(bitmask: %i[a b]) }
+
+          context 'with :a' do
+            let(:bitmask_or_attributes) { [:a] }
+            it { is_expected.to contain_exactly(post_bitmask_blank, post_bitmask_2) }
+          end
+
+          context 'with :b' do
+            let(:bitmask_or_attributes) { [:b] }
+            it { is_expected.to contain_exactly(post_bitmask_blank, post_bitmask_1) }
+          end
+
+          context 'with [:a, :b]' do
+            let(:bitmask_or_attributes) { [:a, :b] }
+            it { is_expected.to contain_exactly(post_bitmask_blank) }
+          end
+
+          context 'with 1' do
+            let(:bitmask_or_attributes) { [1] }
+            it { is_expected.to contain_exactly(post_bitmask_blank, post_bitmask_2) }
+          end
+
+          context 'with []' do
+            let(:bitmask_or_attributes) { [] }
+            it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_2, post_bitmask_3) }
+          end
+
+          context 'with 0' do
+            let(:bitmask_or_attributes) { [0] }
+            it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_2, post_bitmask_3) }
+          end
+
+          context 'with nil' do
+            let(:bitmask_or_attributes) { [nil] }
+            it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_2, post_bitmask_3) }
+          end
+
+          context 'without argument' do
+            let(:bitmask_or_attributes) { [] }
+            it { is_expected.to contain_exactly(post_bitmask_1, post_bitmask_2, post_bitmask_3) }
           end
 
           context 'with :unknown' do

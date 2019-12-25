@@ -52,6 +52,11 @@ module ActiveRecordBitmask
       mapping.keys
     end
 
+    # @return [Array<Integer>]
+    def values
+      mapping.values
+    end
+
     private
 
     def attributes_to_mapping(keys)

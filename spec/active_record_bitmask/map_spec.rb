@@ -13,6 +13,11 @@ RSpec.describe ActiveRecordBitmask::Map do
       it { is_expected.to eq(as) }
     end
 
+    describe '#values' do
+      subject { instance.values }
+      it { is_expected.to eq([1, 2, 4, 8, 16, 32, 64]) }
+    end
+
     describe '#bitmask_to_attributes' do
       subject { instance.bitmask_to_attributes(value) }
 
