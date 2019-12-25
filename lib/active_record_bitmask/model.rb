@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'active_support/concern'
+require 'active_support/core_ext/class/attribute'
 
 module ActiveRecordBitmask
   module Model
@@ -8,6 +9,7 @@ module ActiveRecordBitmask
 
     included do
       include ActiveRecordBitmask::AttributeMethods::Query
+      class_attribute(:bitmasks, instance_writer: false, default: {})
     end
 
     class_methods do
@@ -30,11 +32,6 @@ module ActiveRecordBitmask
         end
       end
 
-      # @return [Hash<Symbol, ActiveRecordBitmask::Map>]
-      def bitmasks
-        base_class._base_bitmask_maps
-      end
-
       # @param attribute [#to_s]
       #
       # @raise [KeyError]
@@ -42,12 +39,6 @@ module ActiveRecordBitmask
       # @return [ActiveRecordBitmask::Map]
       def bitmask_for(attribute)
         bitmasks.fetch(attribute.to_sym)
-      end
-
-      protected
-
-      def _base_bitmask_maps
-        @_base_bitmask_maps ||= {}
       end
 
       private
