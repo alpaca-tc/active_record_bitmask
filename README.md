@@ -55,15 +55,15 @@ map.values #=> [1, 2, 4]
 
 ### Scopes
 
-#### `with_rules`
+#### `with_roles`
 
-#### `with_any_rules`
+#### `with_any_roles`
 
-#### `without_rules`
+#### `without_roles`
 
-#### `with_exact_rules`
+#### `with_exact_roles`
 
-#### `no_rules`
+#### `no_roles`
 
 ## Development
 
