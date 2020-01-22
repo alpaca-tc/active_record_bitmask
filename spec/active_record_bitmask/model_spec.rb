@@ -23,7 +23,7 @@ RSpec.describe ActiveRecordBitmask::Model do
             end
           end
 
-          it "can overwrite bitmask" do
+          it 'can overwrite bitmask' do
             with_bitmask(Variation, bitmask: [:a]) do
               inherited = Class.new(Variation)
               inherited.bitmask(bitmask: [:b])
