@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.version       = ActiveRecordBitmask::VERSION
   spec.authors       = ['alpaca-tc']
   spec.email         = ['alpaca-tc@alpaca.tc']
-  spec.licenses    = ['MIT']
+  spec.licenses      = ['MIT']
 
   spec.summary       = 'Simple bitmask attribute support for ActiveRecord'
   spec.homepage      = 'https://github.com/alpaca-tc/active_record_bitmask'
