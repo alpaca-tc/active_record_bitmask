@@ -67,7 +67,17 @@ RSpec.describe ActiveRecordBitmask::Map do
 
       context 'given 0' do
         let(:value) { 0 }
-        it { expect { subject }.to raise_error(ArgumentError) }
+        it { is_expected.to eq(0) }
+      end
+
+      context 'given ""' do
+        let(:value) { '' }
+        it { is_expected.to eq(0) }
+      end
+
+      context 'given "0"' do
+        let(:value) { '0' }
+        it { is_expected.to eq(0) }
       end
 
       context 'given [:a]' do
@@ -204,6 +214,11 @@ RSpec.describe ActiveRecordBitmask::Map do
 
       context 'given :unknown' do
         let(:value) { :unknown }
+        it { expect { subject }.to raise_error(ArgumentError) }
+      end
+
+      context 'given "unknown"' do
+        let(:value) { 'unknown' }
         it { expect { subject }.to raise_error(ArgumentError) }
       end
     end

@@ -2,6 +2,9 @@
 
 module ActiveRecordBitmask
   class Map
+    # Default blank values for checkbox
+    BLANK_VALUES = [:'', :'0'].freeze
+
     attr_reader :mapping
 
     # @param keys [Array<#to_sym>]
@@ -52,6 +55,7 @@ module ActiveRecordBitmask
     # @return [Integer]
     def attributes_to_bitmask(attributes)
       attributes = [attributes].compact unless attributes.respond_to?(:inject)
+      attributes = reject_blank_attributes(attributes)
 
       attributes.inject(0) do |bitmask, key|
         key = key.to_sym if key.respond_to?(:to_sym)
@@ -71,6 +75,12 @@ module ActiveRecordBitmask
     end
 
     private
+
+    def reject_blank_attributes(attributes)
+      attributes.reject do |value|
+        BLANK_VALUES.include?(value.to_s.to_sym)
+      end
+    end
 
     def attributes_to_mapping(keys)
       keys.each_with_index.each_with_object({}) do |(value, index), hash|
