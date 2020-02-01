@@ -1,5 +1,13 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.4.0
-before_install: gem install bundler -v 1.13.7
+  - 2.4.9
+  - 2.5.7
+  - 2.6.5
+  - 2.7.0
+before_install: gem install bundler -v 1.17.0
+gemfile:
+  - gemfiles/5.0_stable.gemfile
+  - gemfiles/5.1_stable.gemfile
+  - gemfiles/5.2_stable.gemfile
+  - gemfiles/6.0_stable.gemfile
