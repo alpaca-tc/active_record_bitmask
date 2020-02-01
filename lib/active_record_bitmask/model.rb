@@ -9,7 +9,10 @@ module ActiveRecordBitmask
 
     included do
       include ActiveRecordBitmask::AttributeMethods::Query
-      class_attribute(:bitmasks, instance_accessor: false, default: {})
+      class_attribute(:bitmasks, instance_accessor: false)
+
+      # `class_attribute` on Rails 5.0 doesn't support default option.
+      self.bitmasks = {}
     end
 
     class_methods do
