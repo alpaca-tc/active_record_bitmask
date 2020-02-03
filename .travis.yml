@@ -12,3 +12,4 @@ gemfile:
   - gemfiles/6.0_stable.gemfile
 script:
   - bundle exec rspec
+  - bundle exec rubocop
