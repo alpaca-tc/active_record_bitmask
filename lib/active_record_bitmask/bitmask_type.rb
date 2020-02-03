@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'active_model'
-
 module ActiveRecordBitmask
   class BitmaskType < ActiveModel::Type::Value
     # @param name [String]

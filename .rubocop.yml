@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - '.bundle/**/*'
+    - 'gemfiles/**/*'
     - Gemfile
   TargetRubyVersion: 2.6
   DisplayCopNames: true
