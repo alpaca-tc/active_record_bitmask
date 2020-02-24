@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/module/delegation'
+
 module ActiveRecordBitmask
   class Map
+    include Enumerable
+
+    delegate(:each, :keys, :values, to: :mapping)
+
     # Default blank values for checkbox
     BLANK_VALUES = [:'', :'0'].freeze
 
@@ -62,16 +68,6 @@ module ActiveRecordBitmask
         bit = mapping.fetch(key) { raise(ArgumentError, "#{key.inspect} is not a valid value") }
         bitmask | bit
       end
-    end
-
-    # @return [Array<Symbol>]
-    def keys
-      mapping.keys
-    end
-
-    # @return [Array<Integer>]
-    def values
-      mapping.values
     end
 
     private
