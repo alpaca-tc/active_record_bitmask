@@ -8,6 +8,17 @@ RSpec.describe ActiveRecordBitmask::Map do
       %i[a b c d e f g]
     end
 
+    describe '#each' do
+      subject { instance.each }
+
+      it do
+        instance.each do |key, value|
+          expect(as).to be_include(key)
+          expect(value).to be_a(Integer)
+        end
+      end
+    end
+
     describe '#keys' do
       subject { instance.keys }
       it { is_expected.to eq(as) }
