@@ -24,6 +24,8 @@ Simply declare an existing integer column as a bitmask.
 
 ```ruby
 class Post < ApplicationRecord
+  # bitmask attribute is integer column.
+  # `t.integer :roles, null: false, default: 0`
   bitmask(roles: [:administrator, :provider, :guest])
 end
 ```
@@ -55,15 +57,45 @@ map.values #=> [1, 2, 4]
 
 ### Scopes
 
-#### `with_roles`
+Named scopes are defined when you call `.bitmask(attribute)`.
 
-#### `with_any_roles`
+#### `.with_attribute`
 
-#### `without_roles`
+```ruby
+# all users with roles
+User.with_roles
 
-#### `with_exact_roles`
+# all administrators
+User.with_roles(:administrator)
 
-#### `no_roles`
+# all users who are both administrator and partner
+User.with_roles(:administrator, :partner)
+```
+
+#### `.with_any_attribute`
+
+```ruby
+# all users who are administrator or partner
+User.with_any_roles(:administrator, :partner)
+```
+
+#### `.without_attribute`, `.no_attribute`
+
+```ruby
+# all users without role
+User.without_roles
+User.no_roles
+
+# all users who are not administrator
+User.without_roles(:administrator)
+```
+
+#### `.with_exact_attribute`
+
+```ruby
+# all users who are both administrator and partner and nothing else
+User.with_exact_roles(:administrator, :partner)
+```
 
 ## Development
 
