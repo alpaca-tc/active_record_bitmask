@@ -218,6 +218,26 @@ RSpec.describe ActiveRecordBitmask::Map do
         it { is_expected.to eq(127) }
       end
 
+      context 'with [1]' do
+        let(:value) { [1] }
+        it { is_expected.to eq(1) }
+      end
+
+      context 'with [3]' do
+        let(:value) { [3] }
+        it { is_expected.to eq(3) }
+      end
+
+      context 'with [1 3]' do
+        let(:value) { [1, 3] }
+        it { is_expected.to eq(3) }
+      end
+
+      context 'with [3 3]' do
+        let(:value) { [3, 3] }
+        it { is_expected.to eq(3) }
+      end
+
       context 'given :a' do
         let(:value) { :a }
         it { is_expected.to eq(1) }

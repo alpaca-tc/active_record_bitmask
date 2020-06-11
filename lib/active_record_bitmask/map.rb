@@ -22,8 +22,15 @@ module ActiveRecordBitmask
     #
     # @return [Integer]
     def bitmask_or_attributes_to_bitmask(value)
-      value = bitmask_to_attributes(value) if value.is_a?(Integer)
-      attributes_to_bitmask(value)
+      values = Array.wrap(value).flat_map do |int_or_to_sym|
+        if int_or_to_sym.is_a?(Integer)
+          bitmask_to_attributes(int_or_to_sym)
+        else
+          int_or_to_sym
+        end
+      end
+
+      attributes_to_bitmask(values)
     end
 
     # @param bitmask [Integer]
