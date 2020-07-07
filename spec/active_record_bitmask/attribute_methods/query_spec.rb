@@ -8,8 +8,12 @@ RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
   end
 
   context '#attribute?' do
-    subject { instance.public_send(:"#{attribute}?") }
+    subject do
+      instance.public_send(:"#{attribute}?", *args)
+    end
+
     let(:instance) { Post.new }
+    let(:args) { [] }
 
     context 'with attribute' do
       let(:attribute) { 'column' }
@@ -74,6 +78,11 @@ RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
 
         context 'with :a' do
           subject { instance.bitmask?(:a) }
+          it { is_expected.to be true }
+        end
+
+        context 'with "a"' do
+          subject { instance.bitmask?('a') }
           it { is_expected.to be true }
         end
 

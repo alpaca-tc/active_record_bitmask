@@ -13,10 +13,10 @@ module ActiveRecordBitmask
         if bitmask_attribute?(attribute_name) && values.present?
           # assert bitmask values
           map = self.class.bitmask_for(attribute_name)
-          map.attributes_to_bitmask(values)
+          expected_value = map.attributes_to_bitmask(values)
+          current_value = map.attributes_to_bitmask(attribute(attribute_name))
 
-          current_value = attribute(attribute_name)
-          values.all? { |value| current_value.include?(value) }
+          (current_value & expected_value) == expected_value
         else
           super
         end
