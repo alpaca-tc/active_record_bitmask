@@ -14,7 +14,14 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Simple bitmask attribute support for ActiveRecord'
   spec.homepage      = 'https://github.com/alpaca-tc/active_record_bitmask'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  spec.metadata      = {
+    'homepage_uri' => 'https://github.com/alpaca-tc/active_record_bitmask',
+    'changelog_uri' => 'https://github.com/alpaca-tc/active_record_bitmask/blob/master/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/alpaca-tc/active_record_bitmask/',
+    'bug_tracker_uri' => 'https://github.com/alpaca-tc/active_record_bitmask/issues'
+  }
+
+  spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
   spec.require_paths = ['lib']
