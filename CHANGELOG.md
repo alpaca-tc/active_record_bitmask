@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Support Rails 6.1.0 #14
+
 ## 0.0.4
 
 * Fixes security alert #9
@@ -6,7 +10,7 @@
 
 ## 0.0.3
 
-* Enumerize ActiveRecordBitmask::Map #4 
+* Enumerize ActiveRecordBitmask::Map #4
 
 * Support old rails #5
 
