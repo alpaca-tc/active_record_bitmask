@@ -37,7 +37,11 @@ RSpec.describe ActiveRecordBitmask::Model do
 
       describe 'Accessors' do
         around do |example|
-          with_bitmask(Post, bitmask: %i[a b c]) { example.run }
+          with_bitmask(klass, bitmask: %i[a b c]) { example.run }
+        end
+
+        let(:klass) do
+          Class.new(Post)
         end
 
         describe 'defined composed object' do
@@ -45,10 +49,10 @@ RSpec.describe ActiveRecordBitmask::Model do
             subject { instance.bitmask }
 
             context 'initial' do
-              let(:instance) { Post.create! }
+              let(:instance) { klass.create! }
 
               it 'saves as 0' do
-                result = Post.connection.exec_query("SELECT bitmask, bitmask_zero FROM #{Post.table_name} WHERE id = #{instance.id}")
+                result = klass.connection.exec_query("SELECT bitmask, bitmask_zero FROM #{klass.table_name} WHERE id = #{instance.id}")
                 row = result[0]
 
                 database_value = row['bitmask']
@@ -60,19 +64,19 @@ RSpec.describe ActiveRecordBitmask::Model do
             end
 
             context 'bitmask is [:a]' do
-              let(:instance) { Post.create!(bitmask: [:a]) }
+              let(:instance) { klass.create!(bitmask: [:a]) }
               it { is_expected.to eq([:a]) }
             end
 
             context 'bitmask is 1' do
-              let(:instance) { Post.create!(bitmask: 1) }
+              let(:instance) { klass.create!(bitmask: 1) }
               it { is_expected.to eq([:a]) }
             end
           end
 
           describe '#bitmask@<<' do
             subject { instance.bitmask }
-            let(:instance) { Post.new }
+            let(:instance) { klass.new }
 
             before do
               instance.bitmask << :a
@@ -83,7 +87,7 @@ RSpec.describe ActiveRecordBitmask::Model do
 
           describe '#bitmask.clear' do
             subject { instance.bitmask }
-            let(:instance) { Post.new(bitmask: [:a]) }
+            let(:instance) { klass.new(bitmask: [:a]) }
 
             before do
               instance.bitmask.clear
@@ -94,7 +98,7 @@ RSpec.describe ActiveRecordBitmask::Model do
 
           describe '#bitmask.push' do
             subject { instance.bitmask }
-            let(:instance) { Post.new }
+            let(:instance) { klass.new }
 
             before do
               instance.bitmask.push(:a)
@@ -105,7 +109,7 @@ RSpec.describe ActiveRecordBitmask::Model do
 
           describe '#bitmask@+=' do
             subject { instance.bitmask }
-            let(:instance) { Post.new }
+            let(:instance) { klass.new }
 
             before do
               instance.bitmask += [bitmask]
@@ -122,7 +126,7 @@ RSpec.describe ActiveRecordBitmask::Model do
 
           describe '#bitmask=' do
             subject { instance.bitmask }
-            let(:instance) { Post.new }
+            let(:instance) { klass.new }
 
             before do
               instance.bitmask = bitmask
@@ -158,17 +162,21 @@ RSpec.describe ActiveRecordBitmask::Model do
 
       describe 'Scopes' do
         describe '.with_bitmask' do
-          subject { Post.with_bitmask(*bitmask_or_attributes) }
+          subject { klass.with_bitmask(*bitmask_or_attributes) }
 
           around do |example|
-            with_bitmask(Post, bitmask: %i[a b c]) { example.run }
+            with_bitmask(klass, bitmask: %i[a b c]) { example.run }
           end
 
-          let!(:post_bitmask_nil) { Post.create!(bitmask: nil) }
-          let!(:post_bitmask_blank) { Post.create!(bitmask: []) }
-          let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
-          let!(:post_bitmask_2) { Post.create!(bitmask: [:b]) }
-          let!(:post_bitmask_3) { Post.create!(bitmask: %i[a b]) }
+          let(:klass) do
+            Class.new(Post)
+          end
+
+          let!(:post_bitmask_nil) { klass.create!(bitmask: nil) }
+          let!(:post_bitmask_blank) { klass.create!(bitmask: []) }
+          let!(:post_bitmask_1) { klass.create!(bitmask: [:a]) }
+          let!(:post_bitmask_2) { klass.create!(bitmask: [:b]) }
+          let!(:post_bitmask_3) { klass.create!(bitmask: %i[a b]) }
 
           context 'with no argument' do
             let(:bitmask_or_attributes) { [] }
@@ -192,17 +200,21 @@ RSpec.describe ActiveRecordBitmask::Model do
         end
 
         describe '.with_any_bitmask' do
-          subject { Post.with_any_bitmask(*bitmask_or_attributes) }
+          subject { klass.with_any_bitmask(*bitmask_or_attributes) }
 
           around do |example|
-            with_bitmask(Post, bitmask: %i[a b c]) { example.run }
+            with_bitmask(klass, bitmask: %i[a b c]) { example.run }
           end
 
-          let!(:post_bitmask_nil) { Post.create!(bitmask: nil) }
-          let!(:post_bitmask_blank) { Post.create!(bitmask: []) }
-          let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
-          let!(:post_bitmask_2) { Post.create!(bitmask: [:b]) }
-          let!(:post_bitmask_3) { Post.create!(bitmask: %i[a b]) }
+          let(:klass) do
+            Class.new(Post)
+          end
+
+          let!(:post_bitmask_nil) { klass.create!(bitmask: nil) }
+          let!(:post_bitmask_blank) { klass.create!(bitmask: []) }
+          let!(:post_bitmask_1) { klass.create!(bitmask: [:a]) }
+          let!(:post_bitmask_2) { klass.create!(bitmask: [:b]) }
+          let!(:post_bitmask_3) { klass.create!(bitmask: %i[a b]) }
 
           context 'with no argument' do
             let(:bitmask_or_attributes) { [] }
@@ -231,16 +243,20 @@ RSpec.describe ActiveRecordBitmask::Model do
         end
 
         describe '.with_exact_bitmask' do
-          subject { Post.with_exact_bitmask(*bitmask_or_attributes) }
+          subject { klass.with_exact_bitmask(*bitmask_or_attributes) }
 
           around do |example|
-            with_bitmask(Post, bitmask: %i[a b c]) { example.run }
+            with_bitmask(klass, bitmask: %i[a b c]) { example.run }
           end
 
-          let!(:post_bitmask_blank) { Post.create!(bitmask: []) }
-          let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
-          let!(:post_bitmask_2) { Post.create!(bitmask: [:b]) }
-          let!(:post_bitmask_3) { Post.create!(bitmask: %i[a b]) }
+          let(:klass) do
+            Class.new(Post)
+          end
+
+          let!(:post_bitmask_blank) { klass.create!(bitmask: []) }
+          let!(:post_bitmask_1) { klass.create!(bitmask: [:a]) }
+          let!(:post_bitmask_2) { klass.create!(bitmask: [:b]) }
+          let!(:post_bitmask_3) { klass.create!(bitmask: %i[a b]) }
 
           context 'with :a' do
             let(:bitmask_or_attributes) { [:a] }
@@ -269,16 +285,20 @@ RSpec.describe ActiveRecordBitmask::Model do
         end
 
         describe '.without_bitmask' do
-          subject { Post.without_bitmask(*bitmask_or_attributes) }
+          subject { klass.without_bitmask(*bitmask_or_attributes) }
 
           around do |example|
-            with_bitmask(Post, bitmask: %i[a b c]) { example.run }
+            with_bitmask(klass, bitmask: %i[a b c]) { example.run }
           end
 
-          let!(:post_bitmask_blank) { Post.create!(bitmask: []) }
-          let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
-          let!(:post_bitmask_2) { Post.create!(bitmask: [:b]) }
-          let!(:post_bitmask_3) { Post.create!(bitmask: %i[a b]) }
+          let(:klass) do
+            Class.new(Post)
+          end
+
+          let!(:post_bitmask_blank) { klass.create!(bitmask: []) }
+          let!(:post_bitmask_1) { klass.create!(bitmask: [:a]) }
+          let!(:post_bitmask_2) { klass.create!(bitmask: [:b]) }
+          let!(:post_bitmask_3) { klass.create!(bitmask: %i[a b]) }
 
           context 'with :a' do
             let(:bitmask_or_attributes) { [:a] }
@@ -327,15 +347,19 @@ RSpec.describe ActiveRecordBitmask::Model do
         end
 
         describe '.no_bitmask' do
-          subject { Post.no_bitmask }
+          subject { klass.no_bitmask }
 
           around do |example|
-            with_bitmask(Post, bitmask: %i[a b c]) { example.run }
+            with_bitmask(klass, bitmask: %i[a b c]) { example.run }
           end
 
-          let!(:post_bitmask_0) { Post.create!(bitmask: []) }
-          let!(:post_bitmask_null) { Post.create!(bitmask: nil) }
-          let!(:post_bitmask_1) { Post.create!(bitmask: [:a]) }
+          let(:klass) do
+            Class.new(Post)
+          end
+
+          let!(:post_bitmask_0) { klass.create!(bitmask: []) }
+          let!(:post_bitmask_null) { klass.create!(bitmask: nil) }
+          let!(:post_bitmask_1) { klass.create!(bitmask: [:a]) }
 
           it { is_expected.to contain_exactly(post_bitmask_0, post_bitmask_null) }
         end
@@ -343,10 +367,14 @@ RSpec.describe ActiveRecordBitmask::Model do
     end
 
     describe '.bitmask_for' do
-      subject { Variation.bitmask_for(:bitmask) }
+      subject { klass.bitmask_for(:bitmask) }
 
       around do |example|
-        with_bitmask(Variation, bitmask: [:a]) { example.run }
+        with_bitmask(klass, bitmask: [:a]) { example.run }
+      end
+
+      let(:klass) do
+        Class.new(Variation)
       end
 
       it { is_expected.to be_a(ActiveRecordBitmask::Map) }
