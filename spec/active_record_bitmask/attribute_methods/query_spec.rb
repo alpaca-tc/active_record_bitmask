@@ -2,9 +2,13 @@
 
 RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
   around do |example|
-    with_bitmask(Post, bitmask: [:a]) do
+    with_bitmask(klass, bitmask: [:a]) do
       example.run
     end
+  end
+
+  let(:klass) do
+    Class.new(Post)
   end
 
   context '#attribute?' do
@@ -12,7 +16,7 @@ RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
       instance.public_send(:"#{attribute}?", *args)
     end
 
-    let(:instance) { Post.new }
+    let(:instance) { klass.new }
     let(:args) { [] }
 
     context 'with attribute' do
@@ -126,7 +130,7 @@ RSpec.describe ActiveRecordBitmask::AttributeMethods::Query do
       instance.public_send(:"#{attribute}_bitmask?", *args)
     end
 
-    let(:instance) { Post.new }
+    let(:instance) { klass.new }
     let(:args) { [] }
 
     context 'with attribute' do
