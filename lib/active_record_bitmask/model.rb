@@ -51,15 +51,21 @@ module ActiveRecordBitmask
       private
 
       def define_bitmask_attribute(attribute, map)
-        # 2nd arguments is deleted in 6.1.0
-        options = if ActiveRecord.gem_version >= Gem::Version.new('6.1.0.rc1')
-                    []
-                  else
-                    [:bitmask]
-                  end
-
-        decorate_attribute_type(attribute, *options) do |subtype|
-          ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
+        if ActiveRecord.gem_version >= Gem::Version.new('7.0.0.alpha1')
+          # Greater than or equal to 7.0.0
+          attribute(attribute) do |subtype|
+            ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
+          end
+        elsif ActiveRecord.gem_version >= Gem::Version.new('6.1.0')
+          # Equal to 6.1.0
+          decorate_attribute_type(attribute) do |subtype|
+            ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
+          end
+        else
+          # Less than 6.1.0
+          decorate_attribute_type(attribute, :bitmask) do |subtype|
+            ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
+          end
         end
       end
 
