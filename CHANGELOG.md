@@ -1,3 +1,8 @@
+## 0.0.6
+
+* Deprecate `#attribute?(*args)` in favor of `#attribute_bitmask?(*args)`. #17
+* Support Rails 7.0.0.alpha1 #18
+
 ## 0.0.5
 
 * Support Rails 6.1.0 #14
