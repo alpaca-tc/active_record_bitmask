@@ -43,8 +43,8 @@ You can check bitmask
 
 ```ruby
 post = Post.create(roles: [:provider, :guest])
-post.roles?(:provider) #=> false
-post.roles?(:guest, :provider) #=> true
+post.roles_bitmask?(:provider) #=> false
+post.roles_bitmask?(:guest, :provider) #=> true
 ```
 
 You can get the definition of bitmask
