@@ -8,6 +8,6 @@ gem "appraisal"
 gem "rake"
 gem "rspec"
 gem "sqlite3"
-gem "activerecord", "7.0.0.alpha2"
+gem "activerecord", "~> 7.0.0"
 
 gemspec path: "../"

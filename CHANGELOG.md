@@ -1,3 +1,7 @@
+## Next Version
+
+* Changed the version of rails specified in appraisal to stable version. #20
+
 ## 0.0.6
 
 * Deprecate `#attribute?(*args)` in favor of `#attribute_bitmask?(*args)`. #17
