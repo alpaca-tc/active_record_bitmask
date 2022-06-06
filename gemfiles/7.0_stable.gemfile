@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 
 gem "pry"
-gem "rubocop", "0.86.0"
+gem "rubocop", "1.28.2"
 gem "appraisal"
 gem "rake"
 gem "rspec"
