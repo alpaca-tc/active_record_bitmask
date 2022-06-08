@@ -70,6 +70,7 @@ module ActiveRecordBitmask
       end
 
       # rubocop:disable Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/PerceivedComplexity
       def define_bitmask_scopes(attribute)
         blank = [0, nil].freeze
 
@@ -127,6 +128,7 @@ module ActiveRecordBitmask
         }
       end
       # rubocop:enable Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/PerceivedComplexity
     end
   end
 end

@@ -4,8 +4,7 @@ RSpec.describe ActiveRecordBitmask::Model do
   describe 'ClassMethods' do
     describe '.bitmask' do
       context 'without attributes' do
-        subject { -> { with_bitmask(Variation, bitmask: []) {} } }
-        it { is_expected.to raise_error(ArgumentError) }
+        it { expect { with_bitmask(Variation, bitmask: []) {} }.to raise_error(ArgumentError) }
       end
 
       context 'with attributes' do
