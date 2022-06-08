@@ -1,6 +1,11 @@
 ## Next Version
 
+## 1.0.0
+
+* **Breaking Changes** Rails 5.0, 5.1 and 5.2 are no longer supported. #23
 * Changed the version of rails specified in appraisal to stable version. #20
+* Migrate travis.ci to Github Actions #22
+* Support ruby 3.2 #24
 
 ## 0.0.6
 
