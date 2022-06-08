@@ -2,9 +2,9 @@ name: Ruby
 
 on:
   push:
-    branches: ["master"]
+    branches: ["main"]
   pull_request:
-    branches: ["master"]
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -30,8 +30,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        gemfile: ['6.0_stable', '6.1_stable', '7.0_stable']
         ruby-version: ['2.5', '2.6', '2.7', '3.0', '3.1']
-
+        exclude:
+          - ruby-version: '3.1'
+            gemfile: '6.0_stable'
+          - ruby-version: '2.5'
+            gemfile: '7.0_stable'
+          - ruby-version: '2.6'
+            gemfile: '7.0_stable'
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
