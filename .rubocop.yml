@@ -1,9 +1,19 @@
 AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  Include:
+    - 'Gemfile'
+    - 'Appraisals'
+    - 'Rakefile'
+    - 'gemfiles/**/*'
+    - 'lib/**/*'
+    - 'spec/**/*'
   Exclude:
     - '.bundle/**/*'
+    - 'vendor/**/*'
     - 'gemfiles/**/*'
     - Gemfile
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.5
   DisplayCopNames: true
 
 Bundler:
@@ -87,3 +97,6 @@ Metrics/PerceivedComplexity:
 Lint/UselessAccessModifier:
   ContextCreatingMethods:
     - concerning
+
+Lint/EmptyBlock:
+  Enabled: false

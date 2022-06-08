@@ -6,6 +6,7 @@ module ActiveRecordBitmask
     # @param map [ActiveRecordBitmask::Map]
     # @param sub_type [ActiveModel::Type::Value]
     def initialize(_name, map, sub_type)
+      super()
       @map = map
       @sub_type = sub_type
     end

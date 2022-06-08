@@ -14,7 +14,7 @@ RSpec.configure do |config|
   config.order = :random
   config.profile_examples = 10
 
-  unless ENV['CIRCLECI'] || ENV['TRAVIS']
+  unless ENV.fetch('CIRCLECI', nil) || ENV.fetch('TRAVIS', nil)
     config.filter_run :focus
     config.run_all_when_everything_filtered = true
   end
