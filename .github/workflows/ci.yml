@@ -30,13 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        gemfile: ['6.0_stable', '6.1_stable', '7.0_stable', '7.1_stable']
+        gemfile: ['6.1_stable', '7.0_stable', '7.1_stable']
         ruby-version: ['3.1', '3.2']
-        exclude:
-          - ruby-version: '3.2'
-            gemfile: '6.0_stable'
-          - ruby-version: '3.1'
-            gemfile: '6.0_stable'
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
     steps:
