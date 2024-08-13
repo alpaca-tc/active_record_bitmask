@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Simple bitmask attribute support for ActiveRecord'
   spec.homepage      = 'https://github.com/alpaca-tc/active_record_bitmask'
 
-  spec.required_ruby_version = '>= 2.5.0'
+  spec.required_ruby_version = '>= 3.1.0'
 
   spec.metadata = {
     'homepage_uri' => 'https://github.com/alpaca-tc/active_record_bitmask',
@@ -28,5 +28,5 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activerecord', '>= 6.0'
+  spec.add_dependency 'activerecord', '>= 6.1'
 end
