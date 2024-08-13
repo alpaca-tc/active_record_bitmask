@@ -1,4 +1,4 @@
-## Next Version
+## 2.0.0
 
 * **Breaking Changes** Rails 6.0 is no longer supported. #28
 * Support Rails 7.2.0 #27
