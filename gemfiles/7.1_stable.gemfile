@@ -7,7 +7,7 @@ gem "rubocop", "1.28.2"
 gem "appraisal"
 gem "rake"
 gem "rspec"
-gem "sqlite3"
+gem "sqlite3", "~> 1.7.0"
 gem "activerecord", "~> 7.1.0"
 
 gemspec path: "../"
