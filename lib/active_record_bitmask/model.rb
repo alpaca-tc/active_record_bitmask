@@ -52,18 +52,13 @@ module ActiveRecordBitmask
 
       def define_bitmask_attribute(attribute, map)
         if ActiveRecord.gem_version >= Gem::Version.new('7.2.0')
-          # Greater than or equal to 7.0.0
+          # Greater than or equal to 7.2.0
           decorate_attributes([attribute]) do |name, subtype|
             ActiveRecordBitmask::BitmaskType.new(name, map, subtype)
           end
-        elsif ActiveRecord.gem_version >= Gem::Version.new('7.0.0')
+        else
           # Greater than or equal to 7.0.0
           attribute(attribute) do |subtype|
-            ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
-          end
-        else
-          # Equal to 6.1.0
-          decorate_attribute_type(attribute) do |subtype|
             ActiveRecordBitmask::BitmaskType.new(attribute, map, subtype)
           end
         end
