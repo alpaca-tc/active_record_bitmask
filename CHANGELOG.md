@@ -1,3 +1,8 @@
+## 3.0.0
+
+* **Breaking Changes** Rails 6.1 is no longer supported. #30
+* Support Rails 8.0.0 #30
+
 ## 2.0.0
 
 * **Breaking Changes** Rails 6.0 is no longer supported. #28
