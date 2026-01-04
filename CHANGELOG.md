@@ -2,6 +2,7 @@
 
 * Bump up rubocop version #31
 * **Breaking Changes** Rails 7.0 and 7.1 are no longer supported. #32
+* Support Rails 8.1.0 #33
 
 ## 3.0.0
 
