@@ -1,3 +1,7 @@
+## Unreleased
+
+* Bump up rubocop version #31
+
 ## 3.0.0
 
 * **Breaking Changes** Rails 6.1 is no longer supported. #30
