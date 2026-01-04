@@ -28,5 +28,5 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activerecord', '>= 7.0'
+  spec.add_dependency 'activerecord', '>= 7.2'
 end
