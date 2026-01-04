@@ -37,7 +37,7 @@ module ActiveRecordBitmask
           expected_value = map.attributes_to_bitmask(values)
           current_value = map.attributes_to_bitmask(attribute(attribute_name))
 
-          (current_value & expected_value) == expected_value
+          current_value.allbits?(expected_value)
         else
           attribute?(attribute_name)
         end

@@ -79,7 +79,7 @@ module ActiveRecordBitmask
     end
 
     def attributes_to_mapping(keys)
-      keys.each_with_index.each_with_object({}) do |(value, index), hash|
+      keys.each_with_index.with_object({}) do |(value, index), hash|
         hash[value.to_sym] = 0b1 << index
       end
     end
